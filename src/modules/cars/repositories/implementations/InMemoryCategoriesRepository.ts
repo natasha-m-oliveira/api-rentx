@@ -4,23 +4,11 @@ import {
   ICreateCategoryDTO,
 } from "../ICategoriesRepository";
 
-// singleton -> é um padrão garante a existência de apenas uma instância de uma classe,
-// mantendo um ponto global de acesso ao seu objeto
-
 export class CategoriesRepository implements ICategoriesRepository {
   private readonly categories: Category[];
 
-  private static INSTANCE: CategoriesRepository;
-
-  private constructor() {
+  constructor() {
     this.categories = [];
-  }
-
-  public static getInstance(): CategoriesRepository {
-    if (!CategoriesRepository.INSTANCE) {
-      CategoriesRepository.INSTANCE = new CategoriesRepository();
-    }
-    return CategoriesRepository.INSTANCE;
   }
 
   async create({ name, description }: ICreateCategoryDTO): Promise<void> {
