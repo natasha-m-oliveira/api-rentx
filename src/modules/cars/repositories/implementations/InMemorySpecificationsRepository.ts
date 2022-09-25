@@ -4,14 +4,16 @@ import {
   ISpecificationsRepository,
 } from "../ISpecificationsRepository";
 
-export class SpecificationsRepository implements ISpecificationsRepository {
+export class InMemorySpecificationsRepository
+  implements ISpecificationsRepository
+{
   private readonly specifications: Specification[] = [];
 
   constructor() {
     this.specifications = [];
   }
 
-  create({ name, description }: ICreateSpecificationDTO): void {
+  async create({ name, description }: ICreateSpecificationDTO): Promise<void> {
     const specification = new Specification();
 
     Object.assign(specification, {
@@ -23,7 +25,7 @@ export class SpecificationsRepository implements ISpecificationsRepository {
     this.specifications.push(specification);
   }
 
-  findByName(name: string): Specification {
+  async findByName(name: string): Promise<Specification> {
     const specification = this.specifications.find(
       (specification) => specification.name === name
     );
