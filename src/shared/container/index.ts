@@ -1,5 +1,7 @@
 import { container } from "tsyringe";
 
+import { PostgresUserRepository } from "../../modules/accounts/repositories/implementations/PostgresUsersRepository";
+import { IUsersRepository } from "../../modules/accounts/repositories/IUsersRepository";
 import { ICategoriesRepository } from "../../modules/cars/repositories/ICategoriesRepository";
 import { PostgresCategoriesRepository } from "../../modules/cars/repositories/implementations/PostgresCategoriesRepository";
 import { PostgresSpecificationsRepository } from "../../modules/cars/repositories/implementations/PostgresSpecificationsRepository";
@@ -16,4 +18,9 @@ container.registerSingleton<ICategoriesRepository>(
 container.registerSingleton<ISpecificationsRepository>(
   "SpecificationsRepository",
   PostgresSpecificationsRepository
+);
+
+container.registerSingleton<IUsersRepository>(
+  "UsersRepository",
+  PostgresUserRepository
 );
