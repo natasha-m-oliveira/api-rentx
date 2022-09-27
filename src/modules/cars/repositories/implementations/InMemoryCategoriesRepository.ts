@@ -4,7 +4,7 @@ import {
   ICreateCategoryDTO,
 } from "../ICategoriesRepository";
 
-export class CategoriesRepository implements ICategoriesRepository {
+export class InMemoryCategoriesRepository implements ICategoriesRepository {
   private readonly categories: Category[];
 
   constructor() {
