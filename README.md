@@ -1,3 +1,70 @@
+## Requirements
+
+### Label
+* **FR** - Functional requirements
+* **NRF** - Non-functional requirements
+* **BR** - Business rule
+
+### **Car Registration**
+
+* FR
+  * It should be able register a new car.
+  * It should be able to list all car categories.
+
+* BR
+  * It should not be able to register a car with a license plate already registered.
+  * It should not be able to change the license plate of an already registered car.
+  * The card must be registered with availability.
+  * The user responsible for the registration must be an administrator.
+
+### **Car listing**
+
+* FR
+  * It should be able to list all available cars.
+  * It should be able to list all available cars by category name.
+  * It should be able to list all available cars by brand name.
+  * It should be able to list all available cars by car name.
+
+* BR
+  * The user does not need to be authenticated to the system.
+
+### **Specification registration on the car**
+
+* FR
+  * It should be able to file a specification for a car.
+  * It should be able to list all specifications.
+  * It should be able to list all cars.
+
+* BR
+  * It should not be able to register a specification for an unregistered car.
+  * It should not be able to register a specification already registered for the same car.
+  * The user responsible for the registration must be an administrator.
+
+### **Car image registration**
+
+* FR
+  * It should be able to register an image of the car.
+  * It should be able to list all cars.
+
+* RNF
+  * Use multer to upload files.
+
+* BR
+  * The user should be able to register more than one image for the same car.
+  * The user responsible for the registration must be an administrator.
+
+### **Car rental**
+
+* FR
+  * It should be able to register a rental.
+
+* BR
+  * The rental should have minimum duration of 24 hours.
+  * It should not be able to register a new rental if there is already one open for the same user.
+  * It should not be possible to register a new rental if there is already one open for the same car.
+
+___
+
 ## Technology
 
 ### Technologies used in the project
