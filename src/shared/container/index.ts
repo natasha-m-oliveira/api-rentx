@@ -1,10 +1,10 @@
 import { container } from "tsyringe";
 
-import { PostgresUserRepository } from "@modules/accounts/repositories/implementations/PostgresUsersRepository";
+import { PostgresUserRepository } from "@modules/accounts/infra/typeorm/repositories/PostgresUsersRepository";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { PostgresCategoriesRepository } from "@modules/cars/infra/typeorm/repositories/PostgresCategoriesRepository";
+import { PostgresSpecificationsRepository } from "@modules/cars/infra/typeorm/repositories/PostgresSpecificationsRepository";
 import { ICategoriesRepository } from "@modules/cars/repositories/ICategoriesRepository";
-import { PostgresCategoriesRepository } from "@modules/cars/repositories/implementations/PostgresCategoriesRepository";
-import { PostgresSpecificationsRepository } from "@modules/cars/repositories/implementations/PostgresSpecificationsRepository";
 import { ISpecificationsRepository } from "@modules/cars/repositories/ISpecificationsRepository";
 
 // ICategoriesRepository
