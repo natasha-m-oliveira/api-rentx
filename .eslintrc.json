@@ -41,6 +41,12 @@
                 }
             }
         ],
+        "@typescript-eslint/no-misused-promises": [
+            "error",
+            {
+                "checksVoidReturn": false
+            }
+        ],
         "class-methods-use-this": "off",
         "import/prefer-default-export": "off",
         "no-shadow": "off",
