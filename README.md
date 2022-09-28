@@ -9,11 +9,9 @@
 
 * FR
   * It should be able register a new car.
-  * It should be able to list all car categories.
 
 * BR
   * It should not be able to register a car with a license plate already registered.
-  * It should not be able to change the license plate of an already registered car.
   * The card must be registered with availability.
   * The user responsible for the registration must be an administrator.
 
