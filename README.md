@@ -30,8 +30,6 @@
 
 * FR
   * It should be able to file a specification for a car.
-  * It should be able to list all specifications.
-  * It should be able to list all cars.
 
 * BR
   * It should not be able to register a specification for an unregistered car.

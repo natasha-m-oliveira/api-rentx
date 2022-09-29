@@ -1,4 +1,4 @@
-import { getRepository, Repository } from "typeorm";
+import { getRepository, In, Repository } from "typeorm";
 
 import { ICreateSpecificationDTO } from "@modules/cars/dtos/ICreateSpecificationDTO";
 import { ISpecificationsRepository } from "@modules/cars/repositories/ISpecificationsRepository";
@@ -29,5 +29,13 @@ export class PostgresSpecificationsRepository
       name,
     });
     return specification;
+  }
+
+  async findByIds(ids: string[]): Promise<Specification[]> {
+    const all = await this.repository.find({
+      id: In(ids),
+    });
+
+    return all;
   }
 }

@@ -20,6 +20,7 @@ export class PostgresCarsRepository implements ICarsRepository {
     fine_amount,
     brand,
     category_id,
+    specifications,
   }: ICreateCarDTO): Promise<Car> {
     const car = this.repository.create({
       name,
@@ -29,6 +30,7 @@ export class PostgresCarsRepository implements ICarsRepository {
       fine_amount,
       brand,
       category_id,
+      specifications,
     });
 
     await this.repository.save(car);
@@ -66,5 +68,10 @@ export class PostgresCarsRepository implements ICarsRepository {
     }
 
     return await carsQuery.getMany();
+  }
+
+  async findById(id: string): Promise<Car> {
+    const car = this.repository.findOne(id);
+    return await car;
   }
 }

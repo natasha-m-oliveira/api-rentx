@@ -30,4 +30,12 @@ export class InMemorySpecificationsRepository
     );
     return specification;
   }
+
+  async findByIds(ids: string[]): Promise<Specification[]> {
+    const all = this.specifications.filter((specification) =>
+      ids.includes(specification.id)
+    );
+
+    return all;
+  }
 }
