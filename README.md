@@ -36,11 +36,10 @@
   * It should not be able to register a specification already registered for the same car.
   * The user responsible for the registration must be an administrator.
 
-### **Car image registration**
+### **Car images registration**
 
 * FR
   * It should be able to register an image of the car.
-  * It should be able to list all cars.
 
 * RNF
   * Use multer to upload files.
