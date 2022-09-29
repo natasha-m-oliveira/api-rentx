@@ -2,9 +2,11 @@ import { container } from "tsyringe";
 
 import { PostgresUserRepository } from "@modules/accounts/infra/typeorm/repositories/PostgresUsersRepository";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { PostgresCarsImagesRepository } from "@modules/cars/infra/typeorm/repositories/PostgresCarsImagesRepository";
 import { PostgresCarsRepository } from "@modules/cars/infra/typeorm/repositories/PostgresCarsRepository";
 import { PostgresCategoriesRepository } from "@modules/cars/infra/typeorm/repositories/PostgresCategoriesRepository";
 import { PostgresSpecificationsRepository } from "@modules/cars/infra/typeorm/repositories/PostgresSpecificationsRepository";
+import { ICarsImagesRepository } from "@modules/cars/repositories/ICarsImagesRepository";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { ICategoriesRepository } from "@modules/cars/repositories/ICategoriesRepository";
 import { ISpecificationsRepository } from "@modules/cars/repositories/ISpecificationsRepository";
@@ -30,4 +32,9 @@ container.registerSingleton<IUsersRepository>(
 container.registerSingleton<ICarsRepository>(
   "CarsRepository",
   PostgresCarsRepository
+);
+
+container.registerSingleton<ICarsImagesRepository>(
+  "CarsImagesRepository",
+  PostgresCarsImagesRepository
 );

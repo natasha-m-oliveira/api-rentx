@@ -53,7 +53,7 @@ export class PostgresCarsRepository implements ICarsRepository {
     category_id?: string,
     name?: string
   ): Promise<Car[]> {
-    const carsQuery = await this.repository
+    const carsQuery = this.repository
       .createQueryBuilder("cars")
       .where("available = :available", { available: true });
 
@@ -72,8 +72,14 @@ export class PostgresCarsRepository implements ICarsRepository {
     return await carsQuery.getMany();
   }
 
-  async findById(id: string): Promise<Car> {
-    const car = this.repository.findOne(id);
-    return await car;
+  async findById(id: string, details?: boolean): Promise<Car> {
+    const car = this.repository
+      .createQueryBuilder("cars")
+      .where("cars.id = :id", { id });
+    if (details) {
+      car.leftJoinAndSelect("cars.images", "images");
+      car.leftJoinAndSelect("cars.specifications", "specifications");
+    }
+    return await car.getOne();
   }
 }
