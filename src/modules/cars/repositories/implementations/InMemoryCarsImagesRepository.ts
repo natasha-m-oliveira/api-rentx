@@ -24,7 +24,7 @@ export class InMemoryCarsImagesRepository implements ICarsImagesRepository {
     return carImage;
   }
 
-  async removeByCarId(car_id: string): Promise<void> {
+  async removeByCar(car_id: string): Promise<void> {
     const all = this.carsImages.filter(
       (carImage) => carImage.car_id !== car_id
     );
