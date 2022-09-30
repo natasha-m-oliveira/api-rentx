@@ -57,7 +57,7 @@
   * The rental should have minimum duration of 24 hours.
   * It should not be able to register a new rental if there is already one open for the same user.
   * It should not be possible to register a new rental if there is already one open for the same car.
-  * The user responsible for the registration must be an administrator.
+  * The user must be authenticated in the application.
 
 ___
 
