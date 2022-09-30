@@ -27,7 +27,7 @@ export class UploadCarImagesUseCase {
       throw new AppError("Car does not exists!");
     }
 
-    await this.carsImagesRepository.removeByCarId(car_id);
+    await this.carsImagesRepository.removeByCar(car_id);
 
     if (carExists.images.length) {
       carExists.images.map(async (image) => {

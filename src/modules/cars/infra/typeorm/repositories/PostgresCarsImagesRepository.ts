@@ -23,7 +23,7 @@ export class PostgresCarsImagesRepository implements ICarsImagesRepository {
     return carImage;
   }
 
-  async removeByCarId(car_id: string): Promise<void> {
+  async removeByCar(car_id: string): Promise<void> {
     await this.repository.delete({
       car_id,
     });
