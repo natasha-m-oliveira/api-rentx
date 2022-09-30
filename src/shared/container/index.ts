@@ -1,5 +1,7 @@
 import { container } from "tsyringe";
 
+import "@shared/container/providers";
+
 import { PostgresUserRepository } from "@modules/accounts/infra/typeorm/repositories/PostgresUsersRepository";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { PostgresCarsImagesRepository } from "@modules/cars/infra/typeorm/repositories/PostgresCarsImagesRepository";
@@ -10,6 +12,8 @@ import { ICarsImagesRepository } from "@modules/cars/repositories/ICarsImagesRep
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { ICategoriesRepository } from "@modules/cars/repositories/ICategoriesRepository";
 import { ISpecificationsRepository } from "@modules/cars/repositories/ISpecificationsRepository";
+import { PostgresRentalsRepository } from "@modules/rentals/infra/typeorm/repositories/PostgresRentalsRepository";
+import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
 
 // ICategoriesRepository
 // singleton -> é um padrão garante a existência de apenas uma instância de uma classe,
@@ -37,4 +41,9 @@ container.registerSingleton<ICarsRepository>(
 container.registerSingleton<ICarsImagesRepository>(
   "CarsImagesRepository",
   PostgresCarsImagesRepository
+);
+
+container.registerSingleton<IRentalsRepository>(
+  "RentalsRepository",
+  PostgresRentalsRepository
 );
