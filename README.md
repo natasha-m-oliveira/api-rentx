@@ -73,6 +73,14 @@
   * If the return time is longer than the expected delivery time, a fine shall be charged for the days of delay.
   * If there is a fine, it must be added to the total rent.
   * The user must be authenticated in the application.
+
+### **List Rentals By User**
+
+* FR
+  * It should be possible to search for all rentals by users.
+
+* BR
+  * The user must be authenticated in the application.
 ___
 
 ## Technology
