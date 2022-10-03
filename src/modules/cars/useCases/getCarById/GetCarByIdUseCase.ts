@@ -4,7 +4,7 @@ import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 
 @injectable()
-export class FindCarByIdCarUseCase {
+export class GetCarByIdCarUseCase {
   constructor(
     @inject("CarsRepository")
     private readonly carsRepository: ICarsRepository
