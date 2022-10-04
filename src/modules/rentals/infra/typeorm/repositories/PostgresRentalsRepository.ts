@@ -64,6 +64,7 @@ export class PostgresRentalsRepository implements IRentalsRepository {
       where: {
         user_id,
       },
+      relations: ["car"],
     });
 
     return rentalsByUser;
