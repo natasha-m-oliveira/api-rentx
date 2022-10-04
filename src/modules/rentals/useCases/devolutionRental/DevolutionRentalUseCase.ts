@@ -4,7 +4,8 @@ import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider.ts/IDateProvider";
-import { AppError } from "@shared/errors/AppError";
+
+import { DevolutionRentalError } from "./DevolutionRentalError";
 
 interface IRequest {
   id: string;
@@ -26,7 +27,7 @@ export class DevolutionRentalUseCase {
     const minimumDaily = 1;
 
     if (!rental) {
-      throw new AppError("Rental does not exists!");
+      throw new DevolutionRentalError();
     }
 
     const car = await this.carsRepository.findById(rental.car_id);

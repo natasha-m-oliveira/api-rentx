@@ -1,7 +1,7 @@
 import { InMemoryCarsRepository } from "@modules/cars/repositories/implementations/InMemoryCarsRepository";
 import { InMemorySpecificationsRepository } from "@modules/cars/repositories/implementations/InMemorySpecificationsRepository";
-import { AppError } from "@shared/errors/AppError";
 
+import { CreateCarSpecificationError } from "./CreateCarSpecificationError";
 import { CreateCarSpecificationUseCase } from "./CreateCarSpecificationUseCase";
 
 let createCarSpecificationUseCase: CreateCarSpecificationUseCase;
@@ -20,12 +20,12 @@ describe("Create Car Specification", () => {
   it("should not be able to add a new specification to a now-existent car", async () => {
     const car_id = "1234";
     const specifications_id = ["54321"];
-    void expect(async () => {
-      await createCarSpecificationUseCase.execute({
+    await expect(
+      createCarSpecificationUseCase.execute({
         car_id,
         specifications_id,
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toBeInstanceOf(CreateCarSpecificationError);
   });
 
   it("should be able to add a new specification to the car", async () => {

@@ -1,9 +1,9 @@
 import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
 import { InMemoryUsersRepository } from "@modules/accounts/repositories/implementations/InMemoryUsersRepository";
-import { AppError } from "@shared/errors/AppError";
 
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
+import { IncorrectEmailOrPasswordError } from "./IncorrectEmailOrPasswordError";
 
 let authenticateUserUseCase: AuthenticateUserUseCase;
 let usersRepository: InMemoryUsersRepository;
@@ -33,30 +33,29 @@ describe("Authenticate User", () => {
     expect(result).toHaveProperty("token");
   });
 
-  it("should not be able to authenticate an nonexistent user", () => {
-    void expect(async () => {
-      await authenticateUserUseCase.execute({
+  it("should not be able to authenticate an nonexistent user", async () => {
+    await expect(
+      authenticateUserUseCase.execute({
         email: "false@email.com",
         password: "incorrectPassword",
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toBeInstanceOf(IncorrectEmailOrPasswordError);
   });
 
-  it("should not be able to authenticate an nonexistent user", () => {
-    void expect(async () => {
-      const user: ICreateUserDTO = {
-        name: "John Doe",
-        password: "1234",
-        email: "john.doe@test.com",
-        driver_license: "000123",
-      };
+  it("should not be able to authenticate an nonexistent user", async () => {
+    const user: ICreateUserDTO = {
+      name: "John Doe",
+      password: "1234",
+      email: "john.doe@test.com",
+      driver_license: "000123",
+    };
 
-      await createUserUseCase.execute(user);
-
-      await authenticateUserUseCase.execute({
+    await createUserUseCase.execute(user);
+    await expect(
+      authenticateUserUseCase.execute({
         email: user.email,
         password: "incorrectPassword",
-      });
-    });
+      })
+    ).rejects.toBeInstanceOf(IncorrectEmailOrPasswordError);
   });
 });

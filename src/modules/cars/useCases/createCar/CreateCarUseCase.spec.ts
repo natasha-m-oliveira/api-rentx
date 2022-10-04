@@ -1,6 +1,6 @@
 import { InMemoryCarsRepository } from "@modules/cars/repositories/implementations/InMemoryCarsRepository";
-import { AppError } from "@shared/errors/AppError";
 
+import { CreateCarError } from "./CreateCarError";
 import { CreateCarUseCase } from "./CreateCarUseCase";
 
 let createCarUseCase: CreateCarUseCase;
@@ -25,7 +25,7 @@ describe("Create Car", () => {
     expect(car).toHaveProperty("id");
   });
 
-  it("should not be able to create a car with exists license plate", () => {
+  it("should not be able to create a car with exists license plate", async () => {
     const car = {
       name: "Name Car",
       description: "Description Car",
@@ -35,16 +35,18 @@ describe("Create Car", () => {
       brand: "Brand",
       category_id: "category",
     };
-    void expect(async () => {
-      await createCarUseCase.execute({
-        ...car,
-        name: "Car1",
-      });
-      await createCarUseCase.execute({
+
+    await createCarUseCase.execute({
+      ...car,
+      name: "Car1",
+    });
+
+    await expect(
+      createCarUseCase.execute({
         ...car,
         name: "Car2",
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toBeInstanceOf(CreateCarError);
   });
 
   it("should be able to create a new car with available true be default", async () => {
