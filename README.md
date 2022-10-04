@@ -58,7 +58,20 @@
   * It should not be able to register a new rental if there is already one open for the same user.
   * It should not be possible to register a new rental if there is already one open for the same car.
   * The user must be authenticated in the application.
+  * When making a rental, the car's status must be changed to unavailable.
 
+### **Car return**
+
+* FR
+  * It should be able to return the car.
+
+* BR
+  * If the car is returned less than 24 hours later, the full day will be charged.
+  * When returning, the car must be released for a new rental.
+  * When returning, the user must be released for a new rental.
+  * When returning, the total rent must be calculated.
+  * If the return time is longer than the expected delivery time, a fine shall be charged for the days of delay.
+  * If there is a fine, it must be added to the total rent.
 ___
 
 ## Technology
