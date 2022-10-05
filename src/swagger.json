@@ -70,7 +70,7 @@
           "201": {
             "description": "Created"
           },
-          "500": {
+          "400": {
             "description": "Category already exists"
           }
         }
