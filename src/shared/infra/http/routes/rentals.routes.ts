@@ -14,7 +14,7 @@ const listRentalsByUserController = new ListRentalsByUserController();
 
 rentalsRoutes.post("/", ensureAuthenticated, createRentalController.handle);
 rentalsRoutes.post(
-  "/devolution/:id",
+  "/:id/devolution",
   ensureAuthenticated,
   devolutionRentalController.handle
 );
