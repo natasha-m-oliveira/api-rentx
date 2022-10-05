@@ -3,7 +3,8 @@ import { container } from "tsyringe";
 import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
 import { InMemoryUsersRepository } from "@modules/accounts/repositories/implementations/InMemoryUsersRepository";
 import { InMemoryUsersTokensRepository } from "@modules/accounts/repositories/implementations/InMemoryUsersTokensRepository";
-import { IDateProvider } from "@shared/container/providers/DateProvider.ts/IDateProvider";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
+import { ITokenProvider } from "@shared/container/providers/TokenProvider/ITokenProvider";
 
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
@@ -13,6 +14,7 @@ let authenticateUserUseCase: AuthenticateUserUseCase;
 let usersRepository: InMemoryUsersRepository;
 let usersTokensRepository: InMemoryUsersTokensRepository;
 let dateProvider: IDateProvider;
+let tokenProvider: ITokenProvider;
 let createUserUseCase: CreateUserUseCase;
 
 describe("Authenticate User", () => {
@@ -20,10 +22,12 @@ describe("Authenticate User", () => {
     usersRepository = new InMemoryUsersRepository();
     usersTokensRepository = new InMemoryUsersTokensRepository();
     dateProvider = container.resolve<IDateProvider>("DateProvider");
+    tokenProvider = container.resolve<ITokenProvider>("TokenProvider");
     authenticateUserUseCase = new AuthenticateUserUseCase(
       usersRepository,
       usersTokensRepository,
-      dateProvider
+      dateProvider,
+      tokenProvider
     );
     createUserUseCase = new CreateUserUseCase(usersRepository);
   });

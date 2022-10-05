@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { InMemoryCarsRepository } from "@modules/cars/repositories/implementations/InMemoryCarsRepository";
 import { CreateCarUseCase } from "@modules/cars/useCases/createCar/CreateCarUseCase";
 import { InMemoryRentalsRepository } from "@modules/rentals/repositories/implementations/InMemoryRentalsRepository";
-import { DayjsDateProvider } from "@shared/container/providers/DateProvider.ts/implementations/DayjsDateProvider";
+import { DayjsDateProvider } from "@shared/container/providers/DateProvider/implementations/DayjsDateProvider";
 
 import { CreateRentalError } from "./CreateRentalError";
 import { CreateRentalUseCase } from "./CreateRentalUseCase";

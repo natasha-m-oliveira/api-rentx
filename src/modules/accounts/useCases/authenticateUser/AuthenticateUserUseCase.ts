@@ -1,11 +1,11 @@
 import { compare } from "bcrypt";
-import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
 import auth from "@config/auth";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
-import { IDateProvider } from "@shared/container/providers/DateProvider.ts/IDateProvider";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
+import { ITokenProvider } from "@shared/container/providers/TokenProvider/ITokenProvider";
 
 import { IncorrectEmailOrPasswordError } from "./IncorrectEmailOrPasswordError";
 
@@ -31,45 +31,37 @@ export class AuthenticateUserUseCase {
     @inject("UsersTokensRepository")
     private readonly usersTokensRepository: IUsersTokensRepository,
     @inject("DateProvider")
-    private readonly dateProvider: IDateProvider
+    private readonly dateProvider: IDateProvider,
+    @inject("TokenProvider")
+    private readonly tokenProvider: ITokenProvider
   ) {}
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
-    // Usuário existe
     const user = await this.usersRepository.findByEmail(email);
-    const {
-      secret_token,
-      expires_in_token,
-      secret_refresh_token,
-      expires_in_refresh_token,
-      expires_refresh_token_days,
-    } = auth;
+    const { expires_refresh_token_days } = auth;
 
     if (!user) {
       throw new IncorrectEmailOrPasswordError();
     }
 
-    // Senha está correta
     const passwordMatch = await compare(password, user.password);
 
     if (!passwordMatch) {
       throw new IncorrectEmailOrPasswordError();
     }
 
-    // Gerar jsonwebtoken
-    const token = sign({}, secret_token, {
-      subject: user.id,
-      expiresIn: expires_in_token,
-    });
+    const token = this.tokenProvider.generateAccessToken(user.id);
 
-    const refresh_token = sign({ email }, secret_refresh_token, {
-      subject: user.id,
-      expiresIn: expires_in_refresh_token,
-    });
+    const refresh_token = this.tokenProvider.generateRefreshToken(
+      user.id,
+      email
+    );
 
     const refresh_token_expires_date = this.dateProvider.addDays(
       expires_refresh_token_days
     );
+
+    await this.usersTokensRepository.deleteByUser(user.id);
 
     await this.usersTokensRepository.create({
       user_id: user.id,
@@ -77,7 +69,7 @@ export class AuthenticateUserUseCase {
       expires_date: refresh_token_expires_date,
     });
 
-    const tokenReturn = {
+    return {
       user: {
         name: user.name,
         email: user.email,
@@ -85,7 +77,5 @@ export class AuthenticateUserUseCase {
       token,
       refresh_token,
     };
-
-    return tokenReturn;
   }
 }
