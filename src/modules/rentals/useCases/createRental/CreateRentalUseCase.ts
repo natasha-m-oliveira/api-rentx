@@ -4,7 +4,8 @@ import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider.ts/IDateProvider";
-import { AppError } from "@shared/errors/AppError";
+
+import { CreateRentalError } from "./CreateRentalError";
 
 interface IRequest {
   user_id: string;
@@ -33,11 +34,11 @@ export class CreateRentalUseCase {
     const car = await this.carsRepository.findById(car_id);
 
     if (!car) {
-      throw new AppError("Car not found");
+      throw new CreateRentalError.CarNotFound();
     }
 
     if (!car.available) {
-      throw new AppError("Car is unavailable");
+      throw new CreateRentalError.CarIsUnavailable();
     }
 
     const rentalOpenToUser = await this.rentalsRepository.findOpenRentalByUser(
@@ -45,7 +46,7 @@ export class CreateRentalUseCase {
     );
 
     if (rentalOpenToUser) {
-      throw new AppError("There's a rental in progress for user!");
+      throw new CreateRentalError.RentalInProgress();
     }
 
     const dateNow = this.dateProvider.dateNow();
@@ -56,7 +57,7 @@ export class CreateRentalUseCase {
     );
 
     if (compare < minimumHour) {
-      throw new AppError("Invalid return time!");
+      throw new CreateRentalError.InvalidReturnTime();
     }
 
     const rental = await this.rentalsRepository.create({

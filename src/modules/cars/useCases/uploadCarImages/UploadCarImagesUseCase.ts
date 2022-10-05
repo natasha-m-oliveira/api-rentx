@@ -3,8 +3,9 @@ import { inject, injectable } from "tsyringe";
 import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 import { ICarsImagesRepository } from "@modules/cars/repositories/ICarsImagesRepository";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
-import { AppError } from "@shared/errors/AppError";
 import { deleteFile } from "@utils/file";
+
+import { UploadCarImagesError } from "./UploadCarImagesError";
 
 interface IRequest {
   car_id: string;
@@ -24,7 +25,7 @@ export class UploadCarImagesUseCase {
     const carExists = await this.carsRepository.findById(car_id, true);
 
     if (!carExists) {
-      throw new AppError("Car does not exists!");
+      throw new UploadCarImagesError();
     }
 
     await this.carsImagesRepository.removeByCar(car_id);

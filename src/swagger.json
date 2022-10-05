@@ -239,6 +239,9 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "404": {
+            "description": "Car not found"
           }
         }
       }
@@ -308,6 +311,9 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "404": {
+            "description": "Car not found"
           }
         }
       }
@@ -400,8 +406,11 @@
           "201": {
             "description": "Created"
           },
+          "404": {
+            "description": "Car not found"
+          },
           "400": {
-            "description": "Car not found, car is unavailable or there's a rental in progress for user"
+            "description": "Car is unavailable or there's a rental in progress for user"
           }
         }
       }
@@ -433,8 +442,8 @@
           "200": {
             "description": "Success"
           },
-          "400": {
-            "description": "Rental does not exists"
+          "404": {
+            "description": "Rental not found"
           }
         }
       }
