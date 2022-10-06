@@ -7,5 +7,7 @@ export interface IUsersTokensRepository {
     user_id: string,
     refresh_token: string
   ) => Promise<UserToken>;
+  findLastTokenByUser: (user_id: string) => Promise<UserToken>;
   deleteById: (id: string) => Promise<void>;
+  deleteByUser: (user_id: string) => Promise<void>;
 }

@@ -40,7 +40,21 @@ export class PostgresUsersTokensRepository implements IUsersTokensRepository {
     return userToken;
   }
 
+  async findLastTokenByUser(user_id: string): Promise<UserToken> {
+    const userToken = await this.repository.findOne({
+      where: { user_id },
+      order: { created_at: "DESC" },
+    });
+    return userToken;
+  }
+
   async deleteById(id: string): Promise<void> {
     await this.repository.delete(id);
+  }
+
+  async deleteByUser(user_id: string): Promise<void> {
+    await this.repository.delete({
+      user_id,
+    });
   }
 }
