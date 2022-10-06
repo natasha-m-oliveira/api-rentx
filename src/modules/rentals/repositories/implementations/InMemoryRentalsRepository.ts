@@ -47,7 +47,19 @@ export class InMemoryRentalsRepository implements IRentalsRepository {
       total,
     });
 
-    this.rentals.push(rental);
+    if (id) {
+      rental.id = id;
+      const index = this.rentals.findIndex(({ id }) => rental.id === id);
+      const rentalAlreadyExists = index > -1;
+
+      if (rentalAlreadyExists) {
+        this.rentals[index] = rental;
+      } else {
+        this.rentals.push(rental);
+      }
+    } else {
+      this.rentals.push(rental);
+    }
 
     return rental;
   }

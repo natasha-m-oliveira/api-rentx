@@ -1,49 +1,45 @@
-import { container } from "tsyringe";
+import "reflect-metadata";
+import { hash } from "bcrypt";
 
-import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
 import { InMemoryUsersRepository } from "@modules/accounts/repositories/implementations/InMemoryUsersRepository";
 import { InMemoryUsersTokensRepository } from "@modules/accounts/repositories/implementations/InMemoryUsersTokensRepository";
-import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
-import { ITokenProvider } from "@shared/container/providers/TokenProvider/ITokenProvider";
+import { DayjsDateProvider } from "@shared/container/providers/DateProvider/implementations/DayjsDateProvider";
+import { JWTTokenProvider } from "@shared/container/providers/TokenProvider/implementations/JWTTokenProvider";
 
-import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
 import { IncorrectEmailOrPasswordError } from "./IncorrectEmailOrPasswordError";
 
 let authenticateUserUseCase: AuthenticateUserUseCase;
 let usersRepository: InMemoryUsersRepository;
 let usersTokensRepository: InMemoryUsersTokensRepository;
-let dateProvider: IDateProvider;
-let tokenProvider: ITokenProvider;
-let createUserUseCase: CreateUserUseCase;
+let dateProvider: DayjsDateProvider;
+let tokenProvider: JWTTokenProvider;
 
 describe("Authenticate User", () => {
   beforeEach(() => {
+    tokenProvider = new JWTTokenProvider();
+    dateProvider = new DayjsDateProvider();
     usersRepository = new InMemoryUsersRepository();
     usersTokensRepository = new InMemoryUsersTokensRepository();
-    dateProvider = container.resolve<IDateProvider>("DateProvider");
-    tokenProvider = container.resolve<ITokenProvider>("TokenProvider");
     authenticateUserUseCase = new AuthenticateUserUseCase(
       usersRepository,
       usersTokensRepository,
       dateProvider,
       tokenProvider
     );
-    createUserUseCase = new CreateUserUseCase(usersRepository);
   });
 
   it("should be able to authenticate an user", async () => {
-    const user: ICreateUserDTO = {
+    const user = await usersRepository.create({
       name: "John Doe",
-      password: "1234",
+      password: await hash("1234", 8),
       email: "john.doe@test.com",
       driver_license: "000123",
-    };
+    });
 
-    await createUserUseCase.execute(user);
     const result = await authenticateUserUseCase.execute({
       email: user.email,
-      password: user.password,
+      password: "1234",
     });
 
     expect(result).toHaveProperty("token");
@@ -53,20 +49,19 @@ describe("Authenticate User", () => {
     await expect(
       authenticateUserUseCase.execute({
         email: "false@email.com",
-        password: "incorrectPassword",
+        password: "1234",
       })
     ).rejects.toBeInstanceOf(IncorrectEmailOrPasswordError);
   });
 
   it("should not be able to authenticate an nonexistent user", async () => {
-    const user: ICreateUserDTO = {
+    const user = await usersRepository.create({
       name: "John Doe",
-      password: "1234",
+      password: await hash("1234", 8),
       email: "john.doe@test.com",
       driver_license: "000123",
-    };
+    });
 
-    await createUserUseCase.execute(user);
     await expect(
       authenticateUserUseCase.execute({
         email: user.email,

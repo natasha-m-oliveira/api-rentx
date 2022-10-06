@@ -9,7 +9,6 @@ export class PostgresSpecificationsRepository
   implements ISpecificationsRepository
 {
   private readonly repository: Repository<Specification>;
-  private readonly specifications: Specification[] = [];
 
   constructor() {
     this.repository = getRepository(Specification);

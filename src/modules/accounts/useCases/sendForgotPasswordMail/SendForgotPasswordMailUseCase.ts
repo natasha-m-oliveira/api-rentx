@@ -20,7 +20,8 @@ export class SendForgotPasswordMailUseCase {
     private readonly mailProvider: IMailProvider
   ) {}
 
-  async execute(email: string): Promise<void> {
+  async execute(email: string): Promise<string> {
+    const message = "Verifique seu email";
     const user = await this.usersRepository.findByEmail(email);
     const templatePath = resolve(
       __dirname,
@@ -32,7 +33,7 @@ export class SendForgotPasswordMailUseCase {
     );
 
     if (!user) {
-      console.log(user);
+      return message;
     }
 
     const token = uuidV4();
@@ -43,6 +44,8 @@ export class SendForgotPasswordMailUseCase {
     };
 
     const expires_date = this.dateProvider.addDays(3);
+
+    await this.usersTokensRepository.deleteByUser(user.id);
 
     await this.usersTokensRepository.create({
       refresh_token: token,
@@ -56,5 +59,6 @@ export class SendForgotPasswordMailUseCase {
       variables,
       templatePath
     );
+    return message;
   }
 }
