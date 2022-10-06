@@ -19,7 +19,7 @@ export class PostgresUserRepository implements IUsersRepository {
     password,
     avatar,
     id,
-  }: ICreateUserDTO): Promise<void> {
+  }: ICreateUserDTO): Promise<User> {
     const user = this.repository.create({
       name,
       email,
@@ -30,6 +30,8 @@ export class PostgresUserRepository implements IUsersRepository {
     });
 
     await this.repository.save(user);
+
+    return user;
   }
 
   async findByEmail(email: string): Promise<User> {

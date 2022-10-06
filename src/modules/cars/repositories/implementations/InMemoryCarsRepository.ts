@@ -31,10 +31,22 @@ export class InMemoryCarsRepository implements ICarsRepository {
       brand,
       category_id,
       created_at: new Date(),
-      specifications,
-      id,
+      specifications: specifications || [],
     });
-    this.cars.push(car);
+
+    if (id) {
+      car.id = id;
+      const index = this.cars.findIndex(({ id }) => car.id === id);
+      const carAlreadyExists = index > -1;
+
+      if (carAlreadyExists) {
+        this.cars[index] = car;
+      } else {
+        this.cars.push(car);
+      }
+    } else {
+      this.cars.push(car);
+    }
     return car;
   }
 

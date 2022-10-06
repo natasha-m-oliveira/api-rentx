@@ -15,7 +15,9 @@ export class InMemoryUsersRepository implements IUsersRepository {
     email,
     password,
     driver_license,
-  }: ICreateUserDTO): Promise<void> {
+    avatar,
+    id,
+  }: ICreateUserDTO): Promise<User> {
     const user = new User();
 
     Object.assign(user, {
@@ -23,9 +25,24 @@ export class InMemoryUsersRepository implements IUsersRepository {
       email,
       password,
       driver_license,
+      avatar,
     });
 
-    this.users.push(user);
+    if (id) {
+      user.id = id;
+      const index = this.users.findIndex(({ id }) => user.id === id);
+      const userAlreadyExists = index > -1;
+
+      if (userAlreadyExists) {
+        this.users[index] = user;
+      } else {
+        this.users.push(user);
+      }
+    } else {
+      this.users.push(user);
+    }
+
+    return user;
   }
 
   async findByEmail(email: string): Promise<User> {

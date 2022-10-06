@@ -10,7 +10,7 @@ export class InMemoryCategoriesRepository implements ICategoriesRepository {
     this.categories = [];
   }
 
-  async create({ name, description }: ICreateCategoryDTO): Promise<void> {
+  async create({ name, description }: ICreateCategoryDTO): Promise<Category> {
     const category = new Category();
 
     Object.assign(category, {
@@ -20,6 +20,8 @@ export class InMemoryCategoriesRepository implements ICategoriesRepository {
     });
 
     this.categories.push(category);
+
+    return category;
   }
 
   async list(): Promise<Category[]> {
