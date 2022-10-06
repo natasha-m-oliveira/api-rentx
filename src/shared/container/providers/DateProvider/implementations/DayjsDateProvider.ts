@@ -28,7 +28,12 @@ export class DayjsDateProvider implements IDateProvider {
   }
 
   addDays(days: number, date?: Date): Date {
-    const date_utc = date ? this.convertToUTC(date) : this.dateNow();
-    return dayjs(date_utc).add(days, "days").toDate();
+    const new_date = date ? dayjs(date) : dayjs();
+    return dayjs(new_date).add(days, "days").toDate();
+  }
+
+  addHours(hours: number, date?: Date): Date {
+    const new_date = date ? dayjs(date) : dayjs();
+    return new_date.add(hours, "hours").toDate();
   }
 }

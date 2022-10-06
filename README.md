@@ -81,6 +81,17 @@
 
 * BR
   * The user must be authenticated in the application.
+
+### **Reset Password**
+
+* FR
+  * It should be able to user to reset his password by informing his e-mail.
+  * The user should receive an email with the step by step to reset their password.
+  * The user must be able to enter a new password.
+
+* BR
+  * The user needs to enter a new password.
+  * The link sent to reset the password must expire in 3 hours.
 ___
 
 ## Technology
