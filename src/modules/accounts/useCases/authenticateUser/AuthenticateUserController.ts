@@ -11,6 +11,9 @@ export class AuthenticateUserController {
 
     const token = await authenticateUserUseCase.execute({ password, email });
 
-    return response.setHeader("x-access-token", token.token).json(token);
+    return response
+      .setHeader("x-access-token", token.access_token)
+      .setHeader("x-refresh-token", token.refresh_token)
+      .json(token);
   }
 }

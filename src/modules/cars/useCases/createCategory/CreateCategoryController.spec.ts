@@ -6,7 +6,7 @@ import { v4 as uuidV4 } from "uuid";
 import { app } from "@shared/infra/http/app";
 
 let connection: Connection;
-let token: string;
+let access_token: string;
 describe("Create Category Controller", () => {
   beforeAll(async () => {
     connection = await createConnection();
@@ -25,7 +25,7 @@ describe("Create Category Controller", () => {
       password: "admin",
     });
 
-    token = responseToken.body.token;
+    access_token = responseToken.body.access_token;
   });
 
   afterAll(async () => {
@@ -41,7 +41,7 @@ describe("Create Category Controller", () => {
         description: "Category Supertest",
       })
       .set({
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${access_token}`,
       });
 
     expect(response.status).toBe(201);
@@ -55,7 +55,7 @@ describe("Create Category Controller", () => {
         description: "Category Supertest",
       })
       .set({
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${access_token}`,
       });
 
     expect(response.status).toBe(400);

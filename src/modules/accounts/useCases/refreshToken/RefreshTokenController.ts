@@ -7,7 +7,7 @@ export class RefreshTokenController {
   async handle(request: Request, response: Response): Promise<Response> {
     const refresh_token =
       request.body.refresh_token ||
-      request.headers["x-access-token"] ||
+      request.headers["x-refresh-token"] ||
       request.query.refresh_token;
 
     const refreshTokenUseCase = container.resolve(RefreshTokenUseCase);

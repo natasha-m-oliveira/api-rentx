@@ -12,11 +12,11 @@ import { IOptions, IPayload, ITokenProvider } from "../ITokenProvider";
 
 export class JWTTokenProvider implements ITokenProvider {
   generateAccessToken(user_id: string): string {
-    const token = sign({}, auth.secret_token, {
+    const access_token = sign({}, auth.secret_access_token, {
       subject: user_id,
-      expiresIn: auth.expires_in_token,
+      expiresIn: auth.expires_in_access_token,
     });
-    return token;
+    return access_token;
   }
 
   generateRefreshToken(user_id: string, email: string): string {

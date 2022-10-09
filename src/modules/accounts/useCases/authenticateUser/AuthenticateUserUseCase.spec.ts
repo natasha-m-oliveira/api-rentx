@@ -42,7 +42,7 @@ describe("Authenticate User", () => {
       password: "1234",
     });
 
-    expect(result).toHaveProperty("token");
+    expect(result).toHaveProperty("access_token");
   });
 
   it("should not be able to authenticate an nonexistent user", async () => {
