@@ -7,7 +7,7 @@ import { ITokenProvider } from "@shared/container/providers/TokenProvider/IToken
 import { InvalidRefreshTokenError } from "@shared/errors/InvalidRefreshTokenError";
 
 interface ITokenResponse {
-  token: string;
+  access_token: string;
   refresh_token: string;
 }
 
@@ -55,11 +55,11 @@ export class RefreshTokenUseCase {
       expires_date: refresh_token_expires_date,
     });
 
-    const new_token = this.tokenProvider.generateAccessToken(user_id);
+    const new_access_token = this.tokenProvider.generateAccessToken(user_id);
 
     return {
       refresh_token: new_refresh_token,
-      token: new_token,
+      access_token: new_access_token,
     };
   }
 }

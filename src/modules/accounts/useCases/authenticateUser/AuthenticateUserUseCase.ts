@@ -19,7 +19,7 @@ interface IResponse {
     name: string;
     email: string;
   };
-  token: string;
+  access_token: string;
   refresh_token: string;
 }
 
@@ -50,7 +50,7 @@ export class AuthenticateUserUseCase {
       throw new IncorrectEmailOrPasswordError();
     }
 
-    const token = this.tokenProvider.generateAccessToken(user.id);
+    const access_token = this.tokenProvider.generateAccessToken(user.id);
 
     const refresh_token = this.tokenProvider.generateRefreshToken(
       user.id,
@@ -74,7 +74,7 @@ export class AuthenticateUserUseCase {
         name: user.name,
         email: user.email,
       },
-      token,
+      access_token,
       refresh_token,
     };
   }
