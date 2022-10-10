@@ -8,6 +8,7 @@ export function errorHandler(
   response: Response,
   next: NextFunction
 ): Response {
+  console.log(err);
   if (err instanceof AppError) {
     return response.status(err.statusCode).json({
       message: err.message,

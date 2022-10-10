@@ -364,7 +364,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "file": {
+                  "avatar": {
                     "type": "string",
                     "format": "binary"
                   }

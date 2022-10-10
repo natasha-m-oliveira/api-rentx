@@ -44,11 +44,11 @@ export async function ensureAuthenticated(
       );
       const dateProvider = container.resolve<IDateProvider>("DateProvider");
 
-      const { id, user_id } = await usersTokensRepository.findByRefreshToken(
+      const userToken = await usersTokensRepository.findByRefreshToken(
         refresh_token as string
       );
 
-      if (!id) {
+      if (!userToken) {
         throw new InvalidTokenError();
       }
 
@@ -57,11 +57,13 @@ export async function ensureAuthenticated(
         auth.secret_refresh_token
       );
 
-      await usersTokensRepository.deleteById(id);
+      await usersTokensRepository.deleteById(userToken.id);
 
-      const new_access_token = tokenProvider.generateAccessToken(user_id);
+      const new_access_token = tokenProvider.generateAccessToken(
+        userToken.user_id
+      );
       const new_refresh_token = tokenProvider.generateRefreshToken(
-        user_id,
+        userToken.user_id,
         email
       );
 
@@ -70,7 +72,7 @@ export async function ensureAuthenticated(
       );
 
       await usersTokensRepository.create({
-        user_id,
+        user_id: userToken.user_id,
         refresh_token: new_refresh_token,
         expires_date: refresh_token_expires_date,
       });
@@ -79,7 +81,7 @@ export async function ensureAuthenticated(
       response.set("x-refresh-token", new_refresh_token);
 
       request.user = {
-        id: user_id,
+        id: userToken.user_id,
       };
 
       next();
