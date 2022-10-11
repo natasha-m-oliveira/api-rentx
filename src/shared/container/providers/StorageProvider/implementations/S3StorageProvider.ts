@@ -9,6 +9,7 @@ import { IStorageProvider } from "../IStorageProvider";
 
 export class S3StorageProvider implements IStorageProvider {
   private readonly client: S3;
+
   constructor() {
     this.client = new S3({
       region: process.env.AWS_BUCKET_REGION,
@@ -24,6 +25,7 @@ export class S3StorageProvider implements IStorageProvider {
       .putObject({
         Bucket: `${process.env.AWS_BUCKET}/${folder}`,
         Key: file,
+        ACL: "public-read",
         Body: fileContent,
         ContentType: contentType,
       })
