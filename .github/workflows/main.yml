@@ -34,4 +34,17 @@ jobs:
           # Quais pastas/arquivos que queremos copiar
           source: "., !node_modules, !src/shared/infra/typeorm/index.ts, !docker-compose.yml"
           target: "~/app/rentx"
+          
+      - name: Update API
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/app/rentx
+            npm install
+            ./node_modules/.bin/typeorm migration:run
+            pm2 restart rentx_api
         
