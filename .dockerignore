@@ -2,3 +2,4 @@ node_modules
 coverage
 .git
 .vscode
+dist
