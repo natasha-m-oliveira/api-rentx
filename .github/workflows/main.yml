@@ -33,5 +33,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           # Quais pastas/arquivos que queremos copiar
           source: "., !node_modules, !src/shared/infra/typeorm/index.ts, !docker-compose.yml"
-          target: "test"
+          target: "~/app/rentx"
         
