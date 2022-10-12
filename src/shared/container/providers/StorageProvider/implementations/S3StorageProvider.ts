@@ -21,6 +21,8 @@ export class S3StorageProvider implements IStorageProvider {
     const fileContent = await fs.promises.readFile(originalName);
     const contentType = mime.getType(originalName);
 
+    await fs.promises.unlink(originalName);
+
     await this.client
       .putObject({
         Bucket: `${process.env.AWS_BUCKET}/${folder}`,
@@ -30,8 +32,6 @@ export class S3StorageProvider implements IStorageProvider {
         ContentType: contentType,
       })
       .promise();
-
-    await fs.promises.unlink(originalName);
 
     return file;
   }

@@ -14,7 +14,7 @@ async function create(): Promise<void> {
       values('${id}', 'admin', 'admin@rentx.com.br', '${password}', true, now(), 'XXXXXX')`
   );
 
-  await connection.close;
+  await connection.close();
 }
 
 void create().then(() => console.log("User admin created!"));
