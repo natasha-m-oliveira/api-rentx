@@ -43,7 +43,7 @@ export class SESMailProvider implements IMailProvider {
 
     await this.client.sendMail({
       to,
-      from: "Rentx <noreplay@rentx.com.br>",
+      from: "Rentx <rentx@natashamo.dev>",
       subject,
       html: templateHTML,
     });

@@ -13,12 +13,15 @@ import { router } from "@shared/infra/http/routes";
 
 import swaggerFile from "../../../swagger.json";
 import createConnection from "../typeorm";
+import { rateLimiter } from "./middlewares/rateLimiter";
 
 void createConnection();
 
 const app = express();
 
 app.use(express.json());
+
+app.use(rateLimiter);
 
 app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
