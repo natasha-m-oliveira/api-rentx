@@ -9,7 +9,7 @@
     }
   },
   "paths": {
-    "/sessions": {
+    "/api/v1/sessions": {
       "post": {
         "tags": [
           "Session"
@@ -44,7 +44,7 @@
         }
       }
     },
-    "/categories": {
+    "/api/v1/categories": {
       "post": {
         "tags": [
           "Categories"
@@ -95,7 +95,7 @@
         }
       }
     },
-    "/categories/import": {
+    "/api/v1/categories/import": {
       "post": {
         "tags": [
           "Categories"
@@ -130,7 +130,7 @@
         }
       }
     },
-    "/specifications": {
+    "/api/v1/specifications": {
       "post": {
         "tags": [
           "Specifications"
@@ -162,7 +162,7 @@
         }
       }
     },
-    "/cars": {
+    "/api/v1/cars": {
       "post": {
         "tags": [
           "Cars"
@@ -194,7 +194,7 @@
         }
       }
     },
-    "/cars/{id}/images": {
+    "/api/v1/cars/{id}/images": {
       "post": {
         "tags": [
           "Cars"
@@ -246,7 +246,7 @@
         }
       }
     },
-    "/cars/available": {
+    "/api/v1/cars/available": {
       "get": {
         "tags": [
           "Cars"
@@ -267,7 +267,7 @@
         }
       }
     },
-    "/cars/{id}/specifications": {
+    "/api/v1/cars/{id}/specifications": {
       "post": {
         "tags": [
           "Cars"
@@ -318,7 +318,7 @@
         }
       }
     },
-    "/users": {
+    "/api/v1/users": {
       "post": {
         "tags": [
           "Users"
@@ -345,7 +345,7 @@
         }
       }
     },
-    "/users/avatar": {
+    "/api/v1/users/avatar": {
       "patch": {
         "tags": [
           "Users"
@@ -380,7 +380,7 @@
         }
       }
     },
-    "/rentals": {
+    "/api/v1/rentals": {
       "post": {
         "tags": [
           "Rentals"
@@ -415,7 +415,7 @@
         }
       }
     },
-    "/rentals/{id}/devolution": {
+    "/api/v1/rentals/{id}/devolution": {
       "post": {
         "tags": [
           "Rentals"
@@ -448,7 +448,7 @@
         }
       }
     },
-    "/rentals/user": {
+    "/api/v1/rentals/user": {
       "get": {
         "tags": [
           "Rentals"
