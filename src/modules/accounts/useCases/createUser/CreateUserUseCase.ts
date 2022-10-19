@@ -2,6 +2,7 @@ import { hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
 
 import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
+import { User } from "@modules/accounts/infra/typeorm/entities/User";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 
 import { CreateUserError } from "./CreateUserError";
@@ -18,7 +19,7 @@ export class CreateUserUseCase {
     email,
     password,
     driver_license,
-  }: ICreateUserDTO): Promise<void> {
+  }: ICreateUserDTO): Promise<User> {
     const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
     if (userAlreadyExists) {
@@ -26,11 +27,13 @@ export class CreateUserUseCase {
     }
 
     const passwordHash = await hash(password, 8);
-    await this.usersRepository.create({
+    const user = await this.usersRepository.create({
       name,
       email,
       password: passwordHash,
       driver_license,
     });
+
+    return user;
   }
 }

@@ -30,6 +30,9 @@ export class User {
 
   @Expose({ name: "avatar_url" })
   avatar_url(): string {
+    if (!this.avatar) {
+      return null;
+    }
     switch (process.env.DISK) {
       case "local":
         return `${process.env.APP_API_URL}/avatar/${this.avatar}`;

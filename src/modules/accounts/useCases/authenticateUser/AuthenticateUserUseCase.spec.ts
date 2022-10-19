@@ -31,15 +31,15 @@ describe("Authenticate User", () => {
 
   it("should be able to authenticate an user", async () => {
     const user = await usersRepository.create({
-      name: "John Doe",
-      password: await hash("1234", 8),
-      email: "john.doe@test.com",
-      driver_license: "000123",
+      name: "Belle Klein",
+      password: await hash("248289", 8),
+      email: "us@adasaki.aw",
+      driver_license: "20882643635",
     });
 
     const result = await authenticateUserUseCase.execute({
       email: user.email,
-      password: "1234",
+      password: "248289",
     });
 
     expect(result).toHaveProperty("access_token");
@@ -49,17 +49,17 @@ describe("Authenticate User", () => {
     await expect(
       authenticateUserUseCase.execute({
         email: "false@email.com",
-        password: "1234",
+        password: "248289",
       })
     ).rejects.toBeInstanceOf(IncorrectEmailOrPasswordError);
   });
 
   it("should not be able to authenticate an nonexistent user", async () => {
     const user = await usersRepository.create({
-      name: "John Doe",
-      password: await hash("1234", 8),
-      email: "john.doe@test.com",
-      driver_license: "000123",
+      name: "Ivan Ruiz",
+      password: await hash("221824", 8),
+      email: "uwakauca@nuwrala.na",
+      driver_license: "25799833605",
     });
 
     await expect(

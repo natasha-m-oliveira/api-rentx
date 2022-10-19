@@ -26,7 +26,7 @@ describe("List Categories", () => {
   });
 
   it("should be able to list all categories", async () => {
-    const responseToken = await request(app).post("/sessions").send({
+    const responseToken = await request(app).post("/api/v1/sessions").send({
       email: "admin@rentx.com.br",
       password: "admin",
     });
@@ -34,7 +34,7 @@ describe("List Categories", () => {
     const { access_token } = responseToken.body;
 
     await request(app)
-      .post("/categories")
+      .post("/api/v1/categories")
       .send({
         name: "Category Supertest",
         description: "Category Supertest",
@@ -43,7 +43,7 @@ describe("List Categories", () => {
         Authorization: `Bearer ${access_token as string}`,
       });
 
-    const response = await request(app).get("/categories");
+    const response = await request(app).get("/api/v1/categories");
 
     expect(response.status).toBe(200);
     expect(response.body.length).toBe(1);

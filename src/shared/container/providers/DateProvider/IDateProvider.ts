@@ -6,4 +6,5 @@ export interface IDateProvider {
   addDays: (days: number, date?: Date) => Date;
   addHours: (hours: number, date?: Date) => Date;
   compareIfBefore: (start_date: Date, end_date: Date) => boolean;
+  subtractHours: (hours: number, date?: Date) => Date;
 }

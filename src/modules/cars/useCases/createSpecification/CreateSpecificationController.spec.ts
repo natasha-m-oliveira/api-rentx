@@ -7,7 +7,7 @@ import { app } from "@shared/infra/http/app";
 
 let connection: Connection;
 let access_token: string;
-describe("Create Category Controller", () => {
+describe("Create Specification", () => {
   beforeAll(async () => {
     connection = await createConnection();
     await connection.runMigrations();
@@ -33,12 +33,12 @@ describe("Create Category Controller", () => {
     await connection.close();
   });
 
-  it("should be able to create a new category", async () => {
+  it("should be able to create a new specification", async () => {
     const response = await request(app)
-      .post("/api/v1/categories")
+      .post("/api/v1/specifications")
       .send({
-        name: "Category Supertest",
-        description: "Category Supertest",
+        name: "Câmbio automático",
+        description: "Carro com câmbio automático",
       })
       .set({
         Authorization: `Bearer ${access_token}`,
@@ -47,12 +47,12 @@ describe("Create Category Controller", () => {
     expect(response.status).toBe(201);
   });
 
-  it("should be able to create a new category with name exists", async () => {
+  it("should not be able to create specification already exists", async () => {
     const response = await request(app)
-      .post("/api/v1/categories")
+      .post("/api/v1/specifications")
       .send({
-        name: "Category Supertest",
-        description: "Category Supertest",
+        name: "Câmbio automático",
+        description: "Carro com câmbio automático",
       })
       .set({
         Authorization: `Bearer ${access_token}`,
