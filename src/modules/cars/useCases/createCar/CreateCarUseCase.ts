@@ -48,14 +48,16 @@ export class CreateCarUseCase {
       throw new CreateCarError.CategoryNotFound();
     }
 
-    return await this.carsRepository.create({
+    const car = await this.carsRepository.create({
       name,
       description,
-      daily_rate,
+      daily_rate: daily_rate * 100,
       license_plate,
-      fine_amount,
+      fine_amount: fine_amount * 100,
       brand,
       category_id,
     });
+
+    return car;
   }
 }

@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { RentalMap } from "@modules/rentals/mappers/RentalMap";
+
 import { DevolutionRentalUseCase } from "./DevolutionRentalUseCase";
 
 export class DevolutionRentalController {
@@ -11,6 +13,8 @@ export class DevolutionRentalController {
       id,
     });
 
-    return response.json(rental);
+    const rentalDTO = RentalMap.toDTO(rental);
+
+    return response.json(rentalDTO);
   }
 }

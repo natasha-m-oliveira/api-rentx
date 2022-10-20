@@ -25,4 +25,10 @@ export namespace CreateRentalError {
       super("Invalid return time");
     }
   }
+
+  export class UserNorFound extends AppError {
+    constructor() {
+      super("User not found", 404);
+    }
+  }
 }

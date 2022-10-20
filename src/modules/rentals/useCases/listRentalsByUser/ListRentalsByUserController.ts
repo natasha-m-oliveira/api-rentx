@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { RentalMap } from "@modules/rentals/mappers/RentalMap";
+
 import { ListRentalsByUserUseCase } from "./ListRentalsByUserUseCase";
 
 export class ListRentalsByUserController {
@@ -11,6 +13,10 @@ export class ListRentalsByUserController {
     );
     const rentalsByUser = await listRentalsByUserUseCase.execute(id);
 
-    return response.json(rentalsByUser);
+    const rentalsByUserDTO = rentalsByUser.map((rental) =>
+      RentalMap.toDTO(rental)
+    );
+
+    return response.json(rentalsByUserDTO);
   }
 }

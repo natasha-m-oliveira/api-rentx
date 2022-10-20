@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
@@ -21,7 +22,9 @@ export class CreateRentalUseCase {
     @inject("DateProvider")
     private readonly dateProvider: IDateProvider,
     @inject("CarsRepository")
-    private readonly carsRepository: ICarsRepository
+    private readonly carsRepository: ICarsRepository,
+    @inject("UsersRepository")
+    private readonly usersRepository: IUsersRepository
   ) {}
 
   async execute({
@@ -30,6 +33,12 @@ export class CreateRentalUseCase {
     expected_return_date,
   }: IRequest): Promise<Rental> {
     const minimumHour = 24;
+
+    const user = await this.usersRepository.findById(user_id);
+
+    if (!user) {
+      throw new CreateRentalError.UserNorFound();
+    }
 
     const car = await this.carsRepository.findById(car_id);
 
