@@ -5,7 +5,7 @@ import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 
 interface IRequest {
   category_id?: string;
-  brand?: string;
+  brand_id?: string;
   name?: string;
 }
 
@@ -16,9 +16,9 @@ export class ListAvailableCarsUseCase {
     private readonly carsRepository: ICarsRepository
   ) {}
 
-  async execute({ category_id, brand, name }: IRequest): Promise<Car[]> {
+  async execute({ category_id, brand_id, name }: IRequest): Promise<Car[]> {
     const cars = await this.carsRepository.findAvailable(
-      brand,
+      brand_id,
       category_id,
       name
     );

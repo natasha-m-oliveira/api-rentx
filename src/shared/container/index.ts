@@ -6,10 +6,12 @@ import { PostgresUserRepository } from "@modules/accounts/infra/typeorm/reposito
 import { PostgresUsersTokensRepository } from "@modules/accounts/infra/typeorm/repositories/PostgresUsersTokensRepository";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
+import { PostgresBrandsRepository } from "@modules/cars/infra/typeorm/repositories/PostgresBrandsRepository";
 import { PostgresCarsImagesRepository } from "@modules/cars/infra/typeorm/repositories/PostgresCarsImagesRepository";
 import { PostgresCarsRepository } from "@modules/cars/infra/typeorm/repositories/PostgresCarsRepository";
 import { PostgresCategoriesRepository } from "@modules/cars/infra/typeorm/repositories/PostgresCategoriesRepository";
 import { PostgresSpecificationsRepository } from "@modules/cars/infra/typeorm/repositories/PostgresSpecificationsRepository";
+import { IBrandsRepository } from "@modules/cars/repositories/IBrandsRepository";
 import { ICarsImagesRepository } from "@modules/cars/repositories/ICarsImagesRepository";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { ICategoriesRepository } from "@modules/cars/repositories/ICategoriesRepository";
@@ -53,4 +55,9 @@ container.registerSingleton<IRentalsRepository>(
 container.registerSingleton<IUsersTokensRepository>(
   "UsersTokensRepository",
   PostgresUsersTokensRepository
+);
+
+container.registerSingleton<IBrandsRepository>(
+  "BrandsRepository",
+  PostgresBrandsRepository
 );

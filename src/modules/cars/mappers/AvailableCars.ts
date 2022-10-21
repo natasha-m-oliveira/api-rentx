@@ -3,7 +3,7 @@
 import { Car } from "../infra/typeorm/entities/Car";
 
 export class AvailableCars {
-  static toDTO(cars: Car[]): Array<Omit<Car, "category">> {
+  static toDTO(cars: Car[]): Array<Omit<Car, "category" | "brand">> {
     return cars.map(
       ({
         id,
@@ -13,7 +13,7 @@ export class AvailableCars {
         available,
         license_plate,
         fine_amount,
-        brand,
+        brand_id,
         category_id,
         specifications,
         images,
@@ -27,7 +27,7 @@ export class AvailableCars {
           available,
           license_plate,
           fine_amount: Number(fine_amount) / 100,
-          brand,
+          brand_id,
           category_id,
           specifications,
           images,

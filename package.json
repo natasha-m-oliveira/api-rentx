@@ -8,7 +8,10 @@
     "dev": "ts-node-dev -r tsconfig-paths/register --poll --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
     "test": "NODE_ENV=test jest --detectOpenHandles",
-    "seed:admin": "ts-node-dev src/shared/infra/typeorm/seed/admin.ts"
+    "seed:admin": "ts-node-dev src/shared/infra/typeorm/seed/admin.ts",
+    "seed:brands": "ts-node-dev src/shared/infra/typeorm/seed/brands.ts",
+    "seed:categories": "ts-node-dev src/shared/infra/typeorm/seed/categories.ts",
+    "seed:specifications": "ts-node-dev src/shared/infra/typeorm/seed/specifications.ts"
   },
   "keywords": [],
   "author": "",

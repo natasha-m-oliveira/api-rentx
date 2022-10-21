@@ -1,0 +1,46 @@
+[
+  {
+    "name": "Aventureiro",
+    "description": "São derivados de modelos de rua com visual off-road."
+  },
+  {
+    "name": "Hatch",
+    "description": "Também chamados de hatchback, fazem parte dos mais populares do país."
+  },
+  {
+    "name": "Sedã",
+    "description": "Um dos tipos mais comuns de carroceria associa com o carro moderno."
+  },
+  {
+    "name": "Picape",
+    "description": "Um caminhão leve que tem uma cabine fechada e uma traseira composta por uma caçamba de carga cercada por três paredes baixas sem teto."
+  },
+  {
+    "name": "SUV",
+    "description": "Utilitário esportivo é um veículo automotor de porte avantajado derivado da camionete."
+  },
+  {
+    "name": "Esportivo",
+    "description": "Geralmente um automóvel pequeno, de dois lugares e duas portas, desenhado para resposta rápida, fácil maneabilidade, e condução de alta velocidade."
+  },
+  {
+    "name": "Conversível",
+    "description": "Automóveis no qual o teto pode ser removido e depois recolocado no lugar."
+  },
+  {
+    "name": "Van",
+    "description": "Geralmente um automóvel apenas bancos dianteiros são muitas vezes utilizados para fins comerciais, para transporte de mercadorias e equipamentos."
+  },
+  {
+    "name": "Jipe",
+    "description": "Veículos com tradição off-road"
+  },
+  {
+    "name": "Furgão",
+    "description": "Empregado usualmente como carro de trabalho por possuir bom espaço interno para o transporte de cargas ou de vários passageiros."
+  },
+  {
+    "name": "Caminhão",
+    "description": "São os chamados VUC, voltados para uso na cidade."
+  }
+]

@@ -13,4 +13,10 @@ export namespace CreateCarError {
       super("Category not found", 404);
     }
   }
+
+  export class BrandNotFound extends AppError {
+    constructor() {
+      super("Brand not found", 404);
+    }
+  }
 }

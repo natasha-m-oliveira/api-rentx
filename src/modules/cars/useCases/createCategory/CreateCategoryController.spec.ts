@@ -46,18 +46,4 @@ describe("Create Category Controller", () => {
 
     expect(response.status).toBe(201);
   });
-
-  it("should be able to create a new category with name exists", async () => {
-    const response = await request(app)
-      .post("/api/v1/categories")
-      .send({
-        name: "Category Supertest",
-        description: "Category Supertest",
-      })
-      .set({
-        Authorization: `Bearer ${access_token}`,
-      });
-
-    expect(response.status).toBe(400);
-  });
 });

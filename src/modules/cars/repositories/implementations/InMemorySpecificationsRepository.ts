@@ -43,4 +43,8 @@ export class InMemorySpecificationsRepository
 
     return all;
   }
+
+  async list(): Promise<Specification[]> {
+    return this.specifications;
+  }
 }

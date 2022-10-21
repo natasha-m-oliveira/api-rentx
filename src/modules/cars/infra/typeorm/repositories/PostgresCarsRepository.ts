@@ -18,7 +18,7 @@ export class PostgresCarsRepository implements ICarsRepository {
     daily_rate,
     license_plate,
     fine_amount,
-    brand,
+    brand_id,
     category_id,
     specifications,
     id,
@@ -29,7 +29,7 @@ export class PostgresCarsRepository implements ICarsRepository {
       daily_rate,
       license_plate,
       fine_amount,
-      brand,
+      brand_id,
       category_id,
       specifications,
       id,
@@ -49,7 +49,7 @@ export class PostgresCarsRepository implements ICarsRepository {
   }
 
   async findAvailable(
-    brand?: string,
+    brand_id?: string,
     category_id?: string,
     name?: string
   ): Promise<Car[]> {
@@ -57,8 +57,8 @@ export class PostgresCarsRepository implements ICarsRepository {
       .createQueryBuilder("cars")
       .where("available = :available", { available: true });
 
-    if (brand) {
-      carsQuery.andWhere("cars.brand = :brand", { brand });
+    if (brand_id) {
+      carsQuery.andWhere("cars.brand_id = :brand_id", { brand_id });
     }
 
     if (name) {

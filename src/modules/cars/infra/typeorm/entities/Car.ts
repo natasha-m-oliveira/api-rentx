@@ -11,6 +11,7 @@ import {
 } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
+import { Brand } from "./Brand";
 import { CarImage } from "./CarImage";
 import { Category } from "./Category";
 import { Specification } from "./Specification";
@@ -38,8 +39,12 @@ export class Car {
   @Column()
   fine_amount: number;
 
+  @ManyToOne(() => Brand)
+  @JoinColumn({ name: "brand_id" })
+  brand: Brand;
+
   @Column()
-  brand: string;
+  brand_id: string;
 
   @ManyToOne(() => Category)
   @JoinColumn({ name: "category_id" })

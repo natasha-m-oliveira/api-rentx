@@ -27,7 +27,7 @@ describe("Devolution Rental", () => {
       name: "Car",
       description: "description",
       daily_rate: 110,
-      brand: "brand",
+      brand_id: "brand_id",
       category_id: "category_id",
       fine_amount: 50,
       license_plate: "AXL-9604",

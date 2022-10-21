@@ -1,0 +1,54 @@
+import { hash } from "bcrypt";
+import request from "supertest";
+import { Connection, createConnection } from "typeorm";
+import { v4 as uuidV4 } from "uuid";
+
+import { app } from "@shared/infra/http/app";
+
+let connection: Connection;
+describe("List Specifications", () => {
+  beforeAll(async () => {
+    connection = await createConnection();
+    await connection.runMigrations();
+
+    const id = uuidV4();
+    const password = await hash("admin", 8);
+
+    await connection.query(
+      `INSERT INTO users(id, name, email, password, is_admin, created_at, driver_license)
+      values('${id}', 'admin', 'admin@rentx.com.br', '${password}', true, now(), 'XXXXXX')`
+    );
+  });
+
+  afterAll(async () => {
+    await connection.dropDatabase();
+    await connection.close();
+  });
+
+  it("should be able to list all specifications", async () => {
+    const responseToken = await request(app).post("/api/v1/sessions").send({
+      email: "admin@rentx.com.br",
+      password: "admin",
+    });
+
+    const { access_token } = responseToken.body;
+
+    await request(app)
+      .post("/api/v1/specifications")
+      .send({
+        name: "Tração dianteira",
+        description:
+          "Maior espaço interno e segurança ao condutor inexperiente",
+      })
+      .set({
+        Authorization: `Bearer ${access_token as string}`,
+      });
+
+    const response = await request(app).get("/api/v1/specifications");
+
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBe(1);
+    expect(response.body[0]).toHaveProperty("id");
+    expect(response.body[0].name).toEqual("Tração dianteira");
+  });
+});

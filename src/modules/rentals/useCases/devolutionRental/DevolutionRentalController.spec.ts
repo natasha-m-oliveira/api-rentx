@@ -31,6 +31,17 @@ describe("Devolution Rental", () => {
     access_token = responseToken.body.access_token;
     dateProvider = new DayjsDateProvider();
 
+    const responseBrand = await request(app)
+      .post("/api/v1/brands")
+      .send({
+        name: "Kia",
+      })
+      .set({
+        Authorization: `Bearer ${access_token}`,
+      });
+
+    const brand_id = responseBrand.body.id;
+
     const responseCategory = await request(app)
       .post("/api/v1/categories")
       .send({
@@ -52,7 +63,7 @@ describe("Devolution Rental", () => {
         daily_rate: 1250,
         license_plate: "AYG-3051",
         fine_amount: 456,
-        brand: "Kia",
+        brand_id,
         category_id,
       })
       .set({

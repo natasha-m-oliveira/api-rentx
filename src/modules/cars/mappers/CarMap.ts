@@ -11,12 +11,12 @@ export class CarMap {
     available,
     license_plate,
     fine_amount,
-    brand,
+    brand_id,
     category_id,
     specifications,
     images,
     created_at,
-  }: Car): Omit<Car, "category"> {
+  }: Car): Omit<Car, "category" | "brand"> {
     return {
       id,
       name,
@@ -25,7 +25,7 @@ export class CarMap {
       available,
       license_plate,
       fine_amount: Number(fine_amount) / 100,
-      brand,
+      brand_id,
       category_id,
       specifications,
       images,

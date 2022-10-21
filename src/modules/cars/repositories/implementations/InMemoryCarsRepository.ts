@@ -16,7 +16,7 @@ export class InMemoryCarsRepository implements ICarsRepository {
     daily_rate,
     license_plate,
     fine_amount,
-    brand,
+    brand_id,
     category_id,
     specifications,
     id,
@@ -28,7 +28,7 @@ export class InMemoryCarsRepository implements ICarsRepository {
       daily_rate,
       license_plate,
       fine_amount,
-      brand,
+      brand_id,
       category_id,
       created_at: new Date(),
       specifications: specifications || [],
@@ -56,15 +56,15 @@ export class InMemoryCarsRepository implements ICarsRepository {
   }
 
   async findAvailable(
-    brand?: string,
+    brand_id?: string,
     category_id?: string,
     name?: string
   ): Promise<Car[]> {
-    if (brand || category_id || name) {
+    if (brand_id || category_id || name) {
       return this.cars.filter(
         (car) =>
           car.available &&
-          ((brand && car.brand === brand) ||
+          ((brand_id && car.brand_id === brand_id) ||
             (category_id && car.category_id === category_id) ||
             (name && car.name.includes(name)))
       );

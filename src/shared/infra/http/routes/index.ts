@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { authenticateRoutes } from "./authenticate.routes";
+import { brandsRoutes } from "./brands.routes";
 import { carsRoutes } from "./cars.routes";
 import { categoriesRoutes } from "./categories.routes";
 import { passwordRoutes } from "./password.routes";
@@ -11,6 +12,7 @@ import { usersRoutes } from "./users.routes";
 const router = Router();
 
 // Agrupamento de rotas
+router.use("/brands", brandsRoutes);
 router.use("/categories", categoriesRoutes);
 router.use("/specifications", specificationsRoutes);
 router.use("/users", usersRoutes);

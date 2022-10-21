@@ -37,6 +37,17 @@ describe("List Rentals By User", () => {
   });
 
   it("should be able to list all rentals by user", async () => {
+    const responseBrand = await request(app)
+      .post("/api/v1/brands")
+      .send({
+        name: "Ferrari",
+      })
+      .set({
+        Authorization: `Bearer ${access_token}`,
+      });
+
+    const brand_id = responseBrand.body.id;
+
     const responseCategory = await request(app)
       .post("/api/v1/categories")
       .send({
@@ -58,7 +69,7 @@ describe("List Rentals By User", () => {
         daily_rate: 2899,
         license_plate: "HRL-4358",
         fine_amount: 789,
-        brand: "Ferrari",
+        brand_id,
         category_id,
       })
       .set({
