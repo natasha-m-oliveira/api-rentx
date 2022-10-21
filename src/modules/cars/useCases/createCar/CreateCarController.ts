@@ -13,7 +13,7 @@ export class CreateCarController {
       daily_rate,
       license_plate,
       fine_amount,
-      brand,
+      brand_id,
       category_id,
     } = request.body;
     const createCarUseCase = container.resolve(CreateCarUseCase);
@@ -24,7 +24,7 @@ export class CreateCarController {
       daily_rate,
       license_plate,
       fine_amount,
-      brand,
+      brand_id,
       category_id,
     });
 

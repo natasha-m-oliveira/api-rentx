@@ -35,7 +35,7 @@ describe("Create Car Specification", () => {
       daily_rate: 100,
       license_plate: "ABC-1234",
       fine_amount: 60,
-      brand: "Brand",
+      brand_id: "brand",
       category_id: "category",
     });
 

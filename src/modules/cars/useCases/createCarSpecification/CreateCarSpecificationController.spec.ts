@@ -34,6 +34,17 @@ describe("Create Car Specification", () => {
   });
 
   it("should not be able to add a new specification to a now-existent car", async () => {
+    const responseBrand = await request(app)
+      .post("/api/v1/brands")
+      .send({
+        name: "Suzuki",
+      })
+      .set({
+        Authorization: `Bearer ${access_token}`,
+      });
+
+    const brand_id = responseBrand.body.id;
+
     const responseCategory = await request(app)
       .post("/api/v1/categories")
       .send({
@@ -55,7 +66,7 @@ describe("Create Car Specification", () => {
         daily_rate: 679,
         license_plate: "JNG-2097",
         fine_amount: 199,
-        brand: "Suzuki",
+        brand_id,
         category_id,
       })
       .set({

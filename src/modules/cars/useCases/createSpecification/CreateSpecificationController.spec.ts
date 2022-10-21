@@ -46,18 +46,4 @@ describe("Create Specification", () => {
 
     expect(response.status).toBe(201);
   });
-
-  it("should not be able to create specification already exists", async () => {
-    const response = await request(app)
-      .post("/api/v1/specifications")
-      .send({
-        name: "Câmbio automático",
-        description: "Carro com câmbio automático",
-      })
-      .set({
-        Authorization: `Bearer ${access_token}`,
-      });
-
-    expect(response.status).toBe(400);
-  });
 });

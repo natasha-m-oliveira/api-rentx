@@ -7,14 +7,14 @@ import { ListAvailableCarsUseCase } from "./ListAvailableCarsUseCase";
 
 export class ListAvailableCarsController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { brand, name, category_id } = request.query;
+    const { brand_id, name, category_id } = request.query;
 
     const listAvailableCarsUseCase = container.resolve(
       ListAvailableCarsUseCase
     );
 
     const cars = await listAvailableCarsUseCase.execute({
-      brand: brand as string,
+      brand_id: brand_id as string,
       name: name as string,
       category_id: category_id as string,
     });

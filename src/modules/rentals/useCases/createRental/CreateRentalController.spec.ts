@@ -31,6 +31,17 @@ describe("Create Rental", () => {
     access_token = responseToken.body.access_token;
     dateProvider = new DayjsDateProvider();
 
+    const responseBrand = await request(app)
+      .post("/api/v1/brands")
+      .send({
+        name: "Ford",
+      })
+      .set({
+        Authorization: `Bearer ${access_token}`,
+      });
+
+    const brand_id = responseBrand.body.id;
+
     const responseCategory = await request(app)
       .post("/api/v1/categories")
       .send({
@@ -52,7 +63,7 @@ describe("Create Rental", () => {
         daily_rate: 199,
         license_plate: "NEL-6421",
         fine_amount: 39,
-        brand: "Ford",
+        brand_id,
         category_id,
       })
       .set({

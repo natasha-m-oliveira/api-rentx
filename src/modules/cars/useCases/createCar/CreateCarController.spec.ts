@@ -7,7 +7,6 @@ import { app } from "@shared/infra/http/app";
 
 let connection: Connection;
 let access_token: string;
-let category_id: string;
 describe("Create Car", () => {
   beforeAll(async () => {
     connection = await createConnection();
@@ -27,6 +26,24 @@ describe("Create Car", () => {
     });
 
     access_token = responseToken.body.access_token;
+  });
+
+  afterAll(async () => {
+    await connection.dropDatabase();
+    await connection.close();
+  });
+
+  it("should be able to create a new car", async () => {
+    const responseBrand = await request(app)
+      .post("/api/v1/brands")
+      .send({
+        name: "Willys Overland",
+      })
+      .set({
+        Authorization: `Bearer ${access_token}`,
+      });
+
+    const brand_id = responseBrand.body.id;
 
     const responseCategory = await request(app)
       .post("/api/v1/categories")
@@ -38,15 +55,7 @@ describe("Create Car", () => {
         Authorization: `Bearer ${access_token}`,
       });
 
-    category_id = responseCategory.body.id;
-  });
-
-  afterAll(async () => {
-    await connection.dropDatabase();
-    await connection.close();
-  });
-
-  it("should be able to create a new car", async () => {
+    const category_id = responseCategory.body.id;
     const response = await request(app)
       .post("/api/v1/cars")
       .send({
@@ -55,7 +64,7 @@ describe("Create Car", () => {
         daily_rate: 580,
         license_plate: "IGF-7075",
         fine_amount: 399,
-        brand: "Willys Overland",
+        brand_id,
         category_id,
       })
       .set({
@@ -63,42 +72,5 @@ describe("Create Car", () => {
       });
     expect(response.status).toBe(201);
     expect(response.body.available).toBeTruthy();
-  });
-
-  it("should not be able to create a car with exists license plate", async () => {
-    const response = await request(app)
-      .post("/api/v1/cars")
-      .send({
-        name: "Willys Interlagos",
-        description: "Primeiro automóvel esportivo produzido no Brasil",
-        daily_rate: 580,
-        license_plate: "IGF-7075",
-        fine_amount: 399,
-        brand: "Willys Overland",
-        category_id,
-      })
-      .set({
-        Authorization: `Bearer ${access_token}`,
-      });
-    expect(response.status).toBe(400);
-  });
-
-  it("should not be able to create car with a non-existent category", async () => {
-    const response = await request(app)
-      .post("/api/v1/cars")
-      .send({
-        name: "Puma GTE",
-        description: "Possuía um estilo italiano, conquistou o Brasil em 1970.",
-        daily_rate: 290,
-        license_plate: "MXE-5177",
-        fine_amount: 168,
-        brand: "Puma",
-        category_id: "c03edb06-22da-4829-89bf-21112555b987",
-      })
-      .set({
-        Authorization: `Bearer ${access_token}`,
-      });
-
-    expect(response.status).toBe(404);
   });
 });

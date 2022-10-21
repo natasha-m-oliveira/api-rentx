@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Câmbio automatizado",
+    "description": "Oferece conforto e praticidade para o condutor"
+  },
+  {
+    "name": "Câmbio manual",
+    "description": "Menor sobrecarga no sistema de freios e economia com manutenção e combustível"
+  },
+  {
+    "name": "Motor de combustão",
+    "description": "Facilidade de abastecimento/recarga e autonomia"
+  },
+  {
+    "name": "Motor elétrico",
+    "description": "Silecioso, alta eficiência energética, mais ecológico e sustentável"
+  },
+  {
+    "name": "Híbrido",
+    "description": "Oferece um motor de combustão interna e um motor eléctrico que permite manter o motor de combustão funcionando a baixas rotações"
+  },
+  {
+    "name": "4 portas",
+    "description": "Automóvel com 4 portas"
+  },
+  {
+    "name": "2 portas",
+    "description": "Automóvel com 2 portas"
+  },
+  {
+    "name": "Tração dianteira",
+    "description": "Maior espaço interno e segurança ao condutor inexperiente"
+  },
+  {
+    "name": "Tração traseira",
+    "description": "Condução mais ágil e esportiva"
+  },
+  {
+    "name": "Tração 4WD",
+    "description": "Ideal para enfrentar terrenos irregulares como estradas de terra, regiões serranas e locais íngremes"
+  },
+  {
+    "name": "Tração AWD",
+    "description": "Alternância da tração dianteira e traseira"
+  },
+  {
+    "name": "Direção hidráulica",
+    "description": "Maior controle na condução"
+  },
+  {
+    "name": "Direção elétrica",
+    "description": "Gerenciamento da energia do automóvel com mais eficiente, exigindo menos do motor"
+  },
+  {
+    "name": "Direção mecânica",
+    "description": "Direção robusta, menor apresentação de defeitos"
+  }
+]

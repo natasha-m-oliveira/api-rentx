@@ -35,6 +35,17 @@ describe("Get Car By Id", () => {
   });
 
   it("should be able to get car by id", async () => {
+    const responseBrand = await request(app)
+      .post("/api/v1/brands")
+      .send({
+        name: "Honda",
+      })
+      .set({
+        Authorization: `Bearer ${access_token}`,
+      });
+
+    const brand_id = responseBrand.body.id;
+
     const responseCategory = await request(app)
       .post("/api/v1/categories")
       .send({
@@ -55,7 +66,7 @@ describe("Get Car By Id", () => {
         daily_rate: 230,
         license_plate: "NAN-2313",
         fine_amount: 90,
-        brand: "Honda",
+        brand_id,
         category_id,
       })
       .set({

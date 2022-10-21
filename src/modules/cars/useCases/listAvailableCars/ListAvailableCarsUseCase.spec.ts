@@ -18,7 +18,7 @@ describe("List Cars", () => {
       daily_rate: 100,
       license_plate: "ABC-1234",
       fine_amount: 60,
-      brand: "Brand",
+      brand_id: "brand",
       category_id: "category",
     });
 
@@ -34,11 +34,11 @@ describe("List Cars", () => {
       daily_rate: 100,
       license_plate: "ABC-1234",
       fine_amount: 60,
-      brand: "car_brand_test",
+      brand_id: "car_brand_test",
       category_id: "category",
     });
 
-    const cars = await listCarsUseCase.execute({ brand: "car_brand_test" });
+    const cars = await listCarsUseCase.execute({ brand_id: "car_brand_test" });
 
     expect(cars).toEqual([car]);
   });
@@ -50,7 +50,7 @@ describe("List Cars", () => {
       daily_rate: 100,
       license_plate: "ABC-1234",
       fine_amount: 60,
-      brand: "car_brand_test",
+      brand_id: "car_brand_test",
       category_id: "category",
     });
 
@@ -66,7 +66,7 @@ describe("List Cars", () => {
       daily_rate: 100,
       license_plate: "ABC-1234",
       fine_amount: 60,
-      brand: "car_brand_test",
+      brand_id: "car_brand_test",
       category_id: "category",
     });
 

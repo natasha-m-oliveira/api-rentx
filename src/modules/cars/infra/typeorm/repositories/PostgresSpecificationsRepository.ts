@@ -40,4 +40,9 @@ export class PostgresSpecificationsRepository
 
     return all;
   }
+
+  async list(): Promise<Specification[]> {
+    const all = await this.repository.find();
+    return all;
+  }
 }

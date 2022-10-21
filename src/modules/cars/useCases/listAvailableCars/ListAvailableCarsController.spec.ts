@@ -28,6 +28,17 @@ describe("List Cars", () => {
 
     const access_token: string = responseToken.body.access_token;
 
+    const responseBrand = await request(app)
+      .post("/api/v1/brands")
+      .send({
+        name: "Chevrolet",
+      })
+      .set({
+        Authorization: `Bearer ${access_token}`,
+      });
+
+    const brand_id = responseBrand.body.id;
+
     const responseCategory = await request(app)
       .post("/api/v1/categories")
       .send({
@@ -48,7 +59,7 @@ describe("List Cars", () => {
         daily_rate: 380,
         license_plate: "IPW-0531",
         fine_amount: 199,
-        brand: "Chevrolet",
+        brand_id,
         category_id,
       })
       .set({
@@ -65,7 +76,7 @@ describe("List Cars", () => {
 
   it("should be able to list all available cars by brand", async () => {
     const response = await request(app).get("/api/v1/cars/available").query({
-      brand: "Chevrolet",
+      brand_id: car.brand_id,
     });
 
     expect(response.status).toBe(200);
@@ -83,7 +94,7 @@ describe("List Cars", () => {
 
   it("should be able to list all available cars by category", async () => {
     const response = await request(app).get("/api/v1/cars/available").query({
-      category: car.category_id,
+      category_id: car.category_id,
     });
 
     expect(response.status).toBe(200);
