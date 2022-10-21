@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { CarMap } from "@modules/cars/mappers/CarMap";
+
 import { CreateCarUseCase } from "./CreateCarUseCase";
 
 export class CreateCarController {
@@ -26,6 +28,8 @@ export class CreateCarController {
       category_id,
     });
 
-    return response.status(201).json(car);
+    const carDTO = CarMap.toDTO(car);
+
+    return response.status(201).json(carDTO);
   }
 }

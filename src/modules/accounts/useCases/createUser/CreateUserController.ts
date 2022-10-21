@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { UserMap } from "@modules/accounts/mappers/UserMap";
+
 import { CreateUserUseCase } from "./CreateUserUseCase";
 
 export class CreateUserController {
@@ -8,13 +10,15 @@ export class CreateUserController {
     const { name, email, password, driver_license } = request.body;
     const createUserUseCase = container.resolve(CreateUserUseCase);
 
-    await createUserUseCase.execute({
+    const user = await createUserUseCase.execute({
       name,
       email,
       password,
       driver_license,
     });
 
-    return response.status(201).send();
+    const userDTO = UserMap.toDTO(user);
+
+    return response.status(201).json(userDTO);
   }
 }

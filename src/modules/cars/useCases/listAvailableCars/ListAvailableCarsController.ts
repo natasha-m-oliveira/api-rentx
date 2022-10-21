@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { AvailableCars } from "@modules/cars/mappers/AvailableCars";
+
 import { ListAvailableCarsUseCase } from "./ListAvailableCarsUseCase";
 
 export class ListAvailableCarsController {
@@ -17,6 +19,8 @@ export class ListAvailableCarsController {
       category_id: category_id as string,
     });
 
-    return response.json(cars);
+    const availableCarsDTO = AvailableCars.toDTO(cars);
+
+    return response.json(availableCarsDTO);
   }
 }

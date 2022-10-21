@@ -10,8 +10,8 @@ export class CreateCategoryController {
     // ao invés de termos a injeção no construdor, chamamos o container e pedimos pra ele retornar a classe correpondente
     const createCategoryUseCase = container.resolve(CreateCategoryUseCase);
 
-    await createCategoryUseCase.execute({ name, description });
+    const category = await createCategoryUseCase.execute({ name, description });
 
-    return response.status(201).send();
+    return response.status(201).json(category);
   }
 }

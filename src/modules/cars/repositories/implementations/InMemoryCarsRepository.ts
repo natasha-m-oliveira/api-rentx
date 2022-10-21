@@ -66,7 +66,7 @@ export class InMemoryCarsRepository implements ICarsRepository {
           car.available &&
           ((brand && car.brand === brand) ||
             (category_id && car.category_id === category_id) ||
-            (name && car.name === name))
+            (name && car.name.includes(name)))
       );
     }
     return this.cars.filter((car) => car.available);

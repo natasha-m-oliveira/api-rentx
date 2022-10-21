@@ -3,7 +3,7 @@ import multer from "multer";
 
 import uploadConfig from "@config/upload";
 import { CreateUserController } from "@modules/accounts/useCases/createUser/CreateUserController";
-import { ProfileUserController } from "@modules/accounts/useCases/profileUser/ProfileUserController";
+import { ShowUserProfileController } from "@modules/accounts/useCases/showUserProfile/ShowUserProfileController";
 import { UpdateUserAvatarController } from "@modules/accounts/useCases/updateUserAvatar/UpdateUserAvatarController";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 
@@ -13,7 +13,7 @@ const uploadAvatar = multer(uploadConfig);
 
 const createUserController = new CreateUserController();
 const updateUserAvatarController = new UpdateUserAvatarController();
-const profileUserController = new ProfileUserController();
+const showUserProfileController = new ShowUserProfileController();
 
 usersRoutes.post("/", createUserController.handle);
 
@@ -24,6 +24,10 @@ usersRoutes.patch(
   updateUserAvatarController.handle
 );
 
-usersRoutes.get("/profile", ensureAuthenticated, profileUserController.handle);
+usersRoutes.get(
+  "/profile",
+  ensureAuthenticated,
+  showUserProfileController.handle
+);
 
 export { usersRoutes };

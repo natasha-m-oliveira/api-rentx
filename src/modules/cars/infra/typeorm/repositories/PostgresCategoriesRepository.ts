@@ -32,4 +32,9 @@ export class PostgresCategoriesRepository implements ICategoriesRepository {
     });
     return category;
   }
+
+  async findById(id: string): Promise<Category> {
+    const category = await this.repository.findOne(id);
+    return category;
+  }
 }

@@ -4,24 +4,24 @@ import redis from "redis";
 
 import { TooManyRequests } from "@shared/errors/TooManyRequests";
 
-const redisClient = redis.createClient({
-  host: process.env.REDIS_HOST,
-  port: Number(process.env.REDIS_PORT),
-});
-
-const limiter = new RateLimiterRedis({
-  storeClient: redisClient,
-  keyPrefix: "rateLimiter",
-  points: 10,
-  duration: 5,
-});
-
 export async function rateLimiter(
   request: Request,
   response: Response,
   next: NextFunction
 ): Promise<void> {
   try {
+    const redisClient = redis.createClient({
+      host: process.env.REDIS_HOST,
+      port: Number(process.env.REDIS_PORT),
+    });
+
+    const limiter = new RateLimiterRedis({
+      storeClient: redisClient,
+      keyPrefix: "rateLimiter",
+      points: 10,
+      duration: 5,
+    });
+
     await limiter.consume(request.ip);
 
     return next();

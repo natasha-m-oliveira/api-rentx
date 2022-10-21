@@ -62,7 +62,7 @@ export class PostgresCarsRepository implements ICarsRepository {
     }
 
     if (name) {
-      carsQuery.andWhere("cars.name = :name", { name });
+      carsQuery.andWhere("cars.name LIKE :name", { name: `%${name}%` });
     }
 
     if (category_id) {

@@ -28,7 +28,7 @@ describe("Send Forgot Mail", () => {
     const sendMail = jest.spyOn(mailProvider, "sendMail");
     const user = await usersRepository.create({
       name: "Kathryn Roy",
-      driver_license: "614476",
+      driver_license: "52003681250",
       email: "domvon@itohu.fr",
       password: "1234",
     });
@@ -49,7 +49,7 @@ describe("Send Forgot Mail", () => {
     const generateTokenMail = jest.spyOn(usersTokensRepository, "create");
     const user = await usersRepository.create({
       name: "Clayton Butler",
-      driver_license: "792313",
+      driver_license: "15931017473",
       email: "perdo@cujhetcul.my",
       password: "1234",
     });
