@@ -11,11 +11,8 @@
   "paths": {
     "/api/v1/sessions": {
       "post": {
-        "tags": [
-          "Session"
-        ],
+        "tags": ["Session"],
         "summary": "Authentication user",
-        "description": "Authentication user",
         "requestBody": {
           "required": true,
           "content": {
@@ -29,6 +26,10 @@
                   "password": {
                     "type": "string"
                   }
+                },
+                "example": {
+                  "email": "tul@ohoacaeji.yt",
+                  "password": "183091"
                 }
               }
             }
@@ -38,19 +39,110 @@
           "200": {
             "description": "Success"
           },
-          "400": {
+          "401": {
             "description": "Email or password incorrect"
+          }
+        }
+      }
+    },
+    "/api/v1/refresh-token": {
+      "post": {
+        "tags": ["Session"],
+        "summary": "Refresh token",
+        "parameters": [
+          {
+            "name": "refresh_token",
+            "in": "query",
+            "description": "Refresh token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-refresh-token",
+            "in": "header",
+            "description": "Refresh token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refresh_token": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Invalid refresh token!"
+          }
+        }
+      }
+    },
+    "/api/v1/brands": {
+      "post": {
+        "tags": ["Brands"],
+        "summary": "Create a brand",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Brand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Brand already exists"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Brands"],
+        "summary": "List all brands",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Brands"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/v1/categories": {
       "post": {
-        "tags": [
-          "Categories"
-        ],
+        "tags": ["Categories"],
         "summary": "Create a category",
-        "description": "Create a new category",
         "security": [
           {
             "bearerAuth": []
@@ -76,11 +168,8 @@
         }
       },
       "get": {
-        "tags": [
-          "Categories"
-        ],
+        "tags": ["Categories"],
         "summary": "List all categories",
-        "description": "List all categories",
         "responses": {
           "200": {
             "description": "Success",
@@ -97,11 +186,8 @@
     },
     "/api/v1/categories/import": {
       "post": {
-        "tags": [
-          "Categories"
-        ],
+        "tags": ["Categories"],
         "summary": "Upload a new category",
-        "description": "Upload a new category",
         "security": [
           {
             "bearerAuth": []
@@ -132,11 +218,8 @@
     },
     "/api/v1/specifications": {
       "post": {
-        "tags": [
-          "Specifications"
-        ],
+        "tags": ["Specifications"],
         "summary": "Create a specification",
-        "description": "Create a new specification",
         "security": [
           {
             "bearerAuth": []
@@ -160,15 +243,28 @@
             "description": "Specification already exists"
           }
         }
+      },
+      "get": {
+        "tags": ["Specifications"],
+        "summary": "List all specifications",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Specifications"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v1/cars": {
       "post": {
-        "tags": [
-          "Cars"
-        ],
+        "tags": ["Cars"],
         "summary": "Create a car",
-        "description": "Create a new car",
         "security": [
           {
             "bearerAuth": []
@@ -190,17 +286,17 @@
           },
           "400": {
             "description": "Car already exists"
+          },
+          "404": {
+            "description": "Category or brand not found"
           }
         }
       }
     },
     "/api/v1/cars/{id}/images": {
       "post": {
-        "tags": [
-          "Cars"
-        ],
+        "tags": ["Cars"],
         "summary": "Upload images",
-        "description": "Upload images",
         "security": [
           {
             "bearerAuth": []
@@ -246,34 +342,10 @@
         }
       }
     },
-    "/api/v1/cars/available": {
-      "get": {
-        "tags": [
-          "Cars"
-        ],
-        "summary": "List available cars",
-        "description": "List available cars",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/definitions/Cars"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/cars/{id}/specifications": {
       "post": {
-        "tags": [
-          "Cars"
-        ],
+        "tags": ["Cars"],
         "summary": "Create car specifications",
-        "description": "Create new car specifications",
         "security": [
           {
             "bearerAuth": []
@@ -303,6 +375,9 @@
                       "type": "string"
                     }
                   }
+                },
+                "example": {
+                  "specifications_id": ["a043d6a0-ba4b-47cb-abf7-2b582a1ab0a2"]
                 }
               }
             }
@@ -318,13 +393,76 @@
         }
       }
     },
+    "/api/v1/cars/{id}": {
+      "get": {
+        "tags": ["Cars"],
+        "summary": "Get specification",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Car id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/cars/available": {
+      "get": {
+        "tags": ["Cars"],
+        "summary": "List available cars",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Car name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category_id",
+            "in": "query",
+            "description": "Category id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "brand_id",
+            "in": "query",
+            "description": "Brand id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Cars"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/users": {
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Create a user",
-        "description": "Create a new user",
         "requestBody": {
           "required": true,
           "content": {
@@ -343,15 +481,26 @@
             "description": "User already exists"
           }
         }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          }
+        }
       }
     },
     "/api/v1/users/avatar": {
       "patch": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Upload avatar",
-        "description": "Upload avatar",
         "security": [
           {
             "bearerAuth": []
@@ -380,13 +529,29 @@
         }
       }
     },
+    "/api/v1/users/profile": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Show profile",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
     "/api/v1/rentals": {
       "post": {
-        "tags": [
-          "Rentals"
-        ],
+        "tags": ["Rentals"],
         "summary": "Create a rental",
-        "description": "Create a new rental",
         "security": [
           {
             "bearerAuth": []
@@ -407,7 +572,7 @@
             "description": "Created"
           },
           "404": {
-            "description": "Car not found"
+            "description": "User or car not found"
           },
           "400": {
             "description": "Car is unavailable or there's a rental in progress for user"
@@ -417,11 +582,8 @@
     },
     "/api/v1/rentals/{id}/devolution": {
       "post": {
-        "tags": [
-          "Rentals"
-        ],
+        "tags": ["Rentals"],
         "summary": "Devolution rental",
-        "description": "Devolution rental",
         "security": [
           {
             "bearerAuth": []
@@ -450,11 +612,8 @@
     },
     "/api/v1/rentals/user": {
       "get": {
-        "tags": [
-          "Rentals"
-        ],
+        "tags": ["Rentals"],
         "summary": "List rentals by user",
-        "description": "List rentals by user",
         "security": [
           {
             "bearerAuth": []
@@ -466,9 +625,106 @@
           }
         }
       }
+    },
+    "/api/v1/password/forgot": {
+      "post": {
+        "tags": ["Password"],
+        "summary": "Send forgot password mail",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email": "tul@ohoacaeji.yt"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/password/reset": {
+      "post": {
+        "tags": ["Password"],
+        "summary": "Reset user password",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "password": "eb8C8fR7bE"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
     }
   },
   "definitions": {
+    "Brand": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "name": "Hyundai"
+      }
+    },
+    "Brands": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "Category": {
       "type": "object",
       "properties": {
@@ -478,6 +734,10 @@
         "description": {
           "type": "string"
         }
+      },
+      "example": {
+        "name": "SUV",
+        "description": "Utilitário esportivo é um veículo automotor de porte avantajado derivado da camionete."
       }
     },
     "Categories": {
@@ -509,6 +769,30 @@
         "description": {
           "type": "string"
         }
+      },
+      "example": {
+        "name": "Direção mecânica",
+        "description": "Direção robusta, menor apresentação de defeitos"
+      }
+    },
+    "Specifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          }
+        }
       }
     },
     "Car": {
@@ -529,12 +813,23 @@
         "fine_amount": {
           "type": "number"
         },
-        "brand": {
+        "brand_id": {
           "type": "string"
         },
         "category_id": {
           "type": "string"
         }
+      },
+      "example": {
+        "name": {
+          "type": "Jimny Sierra"
+        },
+        "description": "Opção inédita que surgiu na quarta geração do jipe, o Jimny Sierra traz uma carroceria ligeiramente maior em relação ao Jimny convencional.",
+        "daily_rate": "659.99",
+        "license_plate": "MYT-7186",
+        "fine_amount": "52.79",
+        "brand_id": "20bb2d48-25f2-471d-a797-16b480de603c",
+        "category_id": "2e9edc02-59ab-41c7-b090-745f6a35b6e6"
       }
     },
     "Cars": {
@@ -563,7 +858,7 @@
           "fine_amount": {
             "type": "string"
           },
-          "brand": {
+          "brand_id": {
             "type": "string"
           },
           "category_id": {
@@ -590,6 +885,12 @@
         "driver_license": {
           "type": "string"
         }
+      },
+      "example": {
+        "name": "Gene Sandoval",
+        "email": "tul@ohoacaeji.yt",
+        "password": "183091",
+        "driver_license": "29604814967"
       }
     },
     "Rental": {

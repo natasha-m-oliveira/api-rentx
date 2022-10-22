@@ -27,15 +27,6 @@ carsRoutes.post(
   createCarController.handle
 );
 
-carsRoutes.get("/available", listAvailableCarsController.handle);
-
-carsRoutes.post(
-  "/:id/specifications",
-  ensureAuthenticated,
-  ensureAdmin,
-  createCarSpecificationController.handle
-);
-
 carsRoutes.post(
   "/:id/images",
   ensureAuthenticated,
@@ -44,6 +35,15 @@ carsRoutes.post(
   uploadCarImagesController.handle
 );
 
+carsRoutes.post(
+  "/:id/specifications",
+  ensureAuthenticated,
+  ensureAdmin,
+  createCarSpecificationController.handle
+);
+
 carsRoutes.get("/:id", getCarByIdCarController.handle);
+
+carsRoutes.get("/available", listAvailableCarsController.handle);
 
 export { carsRoutes };
