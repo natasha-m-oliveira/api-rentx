@@ -4,7 +4,6 @@ import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 import { ICarsImagesRepository } from "@modules/cars/repositories/ICarsImagesRepository";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/IStorageProvider";
-import { deleteFile } from "@utils/file";
 
 import { UploadCarImagesError } from "./UploadCarImagesError";
 
@@ -35,7 +34,7 @@ export class UploadCarImagesUseCase {
 
     if (carExists.images.length) {
       carExists.images.map(async (image) => {
-        await deleteFile(`./tmp/cars/${image.image_name}`);
+        await this.storageProvider.delete(image.image_name, "cars");
       });
     }
 
