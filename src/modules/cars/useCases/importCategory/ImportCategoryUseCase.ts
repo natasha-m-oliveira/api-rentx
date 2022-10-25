@@ -3,6 +3,9 @@ import fs from "fs";
 import { inject, injectable } from "tsyringe";
 
 import { ICategoriesRepository } from "@modules/cars/repositories/ICategoriesRepository";
+import { FileType, validate } from "@utils/file";
+
+import { ImportCategoryError } from "./ImportCategoryError";
 
 interface IImportCategory {
   name: string;
@@ -46,19 +49,29 @@ export class ImportCategoryUseCase {
   }
 
   async execute(file: Express.Multer.File): Promise<void> {
-    const categories = await this.loadCategories(file);
+    try {
+      const invalidFile = !validate({ file, type: FileType.CSV });
 
-    categories.map(async (category) => {
-      const { name, description } = category;
-
-      const existCategory = await this.categoriesRepository.findByName(name);
-
-      if (!existCategory) {
-        await this.categoriesRepository.create({
-          name,
-          description,
-        });
+      if (invalidFile) {
+        throw new ImportCategoryError();
       }
-    });
+      const categories = await this.loadCategories(file);
+
+      categories.map(async (category) => {
+        const { name, description } = category;
+
+        const existCategory = await this.categoriesRepository.findByName(name);
+
+        if (!existCategory) {
+          await this.categoriesRepository.create({
+            name,
+            description,
+          });
+        }
+      });
+    } catch (error) {
+      await fs.promises.unlink(file.path);
+      throw error;
+    }
   }
 }

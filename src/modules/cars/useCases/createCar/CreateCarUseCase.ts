@@ -60,9 +60,9 @@ export class CreateCarUseCase {
     const car = await this.carsRepository.create({
       name,
       description,
-      daily_rate: daily_rate * 100,
+      daily_rate: Math.trunc(daily_rate * 100),
       license_plate,
-      fine_amount: fine_amount * 100,
+      fine_amount: Math.trunc(fine_amount * 100),
       brand_id,
       category_id,
     });

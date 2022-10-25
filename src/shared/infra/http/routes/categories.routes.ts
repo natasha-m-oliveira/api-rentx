@@ -7,6 +7,7 @@ import { ListCategoriesController } from "@modules/cars/useCases/listCategories/
 
 import { ensureAdmin } from "../middlewares/ensureAdmin";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
+import { createCategoryValidation } from "../middlewares/validations/createCategoryValidation";
 
 const categoriesRoutes = Router();
 
@@ -24,6 +25,7 @@ categoriesRoutes.post(
   "/",
   ensureAuthenticated,
   ensureAdmin,
+  createCategoryValidation,
   createCategoryController.handle
 );
 

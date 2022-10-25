@@ -5,6 +5,7 @@ import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTok
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { ITokenProvider } from "@shared/container/providers/TokenProvider/ITokenProvider";
 import { InvalidRefreshTokenError } from "@shared/errors/InvalidRefreshTokenError";
+import { TokenMissingError } from "@shared/errors/TokenMissingError";
 
 interface ITokenResponse {
   access_token: string;
@@ -23,6 +24,10 @@ export class RefreshTokenUseCase {
   ) {}
 
   async execute(refresh_token: string): Promise<ITokenResponse> {
+    if (!refresh_token) {
+      throw new TokenMissingError();
+    }
+
     const { email, sub: user_id } = this.tokenProvider.validateToken(
       refresh_token,
       auth.secret_refresh_token

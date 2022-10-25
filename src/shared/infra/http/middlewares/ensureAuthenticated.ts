@@ -37,56 +37,56 @@ export async function ensureAuthenticated(
 
     next();
   } catch (error) {
-    // Auto Pilot
-    if (error instanceof TokenExpiredError && refresh_token) {
-      const usersTokensRepository = container.resolve<IUsersTokensRepository>(
-        "UsersTokensRepository"
-      );
-      const dateProvider = container.resolve<IDateProvider>("DateProvider");
-
-      const userToken = await usersTokensRepository.findByRefreshToken(
-        refresh_token as string
-      );
-
-      if (!userToken) {
-        throw new InvalidTokenError();
-      }
-
-      const { email } = tokenProvider.validateToken(
-        refresh_token as string,
-        auth.secret_refresh_token
-      );
-
-      await usersTokensRepository.deleteById(userToken.id);
-
-      const new_access_token = tokenProvider.generateAccessToken(
-        userToken.user_id
-      );
-      const new_refresh_token = tokenProvider.generateRefreshToken(
-        userToken.user_id,
-        email
-      );
-
-      const refresh_token_expires_date = dateProvider.addDays(
-        auth.expires_refresh_token_days
-      );
-
-      await usersTokensRepository.create({
-        user_id: userToken.user_id,
-        refresh_token: new_refresh_token,
-        expires_date: refresh_token_expires_date,
-      });
-
-      response.set("x-access-token", new_access_token);
-      response.set("x-refresh-token", new_refresh_token);
-
-      request.user = {
-        id: userToken.user_id,
-      };
-
-      next();
-    } else {
+    if (!(error instanceof TokenExpiredError) || !refresh_token) {
       throw error;
     }
+
+    // Auto Pilot
+    const usersTokensRepository = container.resolve<IUsersTokensRepository>(
+      "UsersTokensRepository"
+    );
+    const dateProvider = container.resolve<IDateProvider>("DateProvider");
+
+    const userToken = await usersTokensRepository.findByRefreshToken(
+      refresh_token as string
+    );
+
+    if (!userToken) {
+      throw new InvalidTokenError();
+    }
+
+    const { email } = tokenProvider.validateToken(
+      refresh_token as string,
+      auth.secret_refresh_token
+    );
+
+    await usersTokensRepository.deleteById(userToken.id);
+
+    const new_access_token = tokenProvider.generateAccessToken(
+      userToken.user_id
+    );
+    const new_refresh_token = tokenProvider.generateRefreshToken(
+      userToken.user_id,
+      email
+    );
+
+    const refresh_token_expires_date = dateProvider.addDays(
+      auth.expires_refresh_token_days
+    );
+
+    await usersTokensRepository.create({
+      user_id: userToken.user_id,
+      refresh_token: new_refresh_token,
+      expires_date: refresh_token_expires_date,
+    });
+
+    response.set("x-access-token", new_access_token);
+    response.set("x-refresh-token", new_refresh_token);
+
+    request.user = {
+      id: userToken.user_id,
+    };
+
+    next();
   }
 }
