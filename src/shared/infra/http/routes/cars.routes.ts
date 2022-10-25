@@ -10,6 +10,10 @@ import { UploadCarImagesController } from "@modules/cars/useCases/uploadCarImage
 import { ensureAdmin } from "@shared/infra/http/middlewares/ensureAdmin";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 
+import { createCarSpecificationsValidation } from "../middlewares/validations/createCarSpecificationsValidation";
+import { createCarValidation } from "../middlewares/validations/createCarValidation";
+import { paramsIdValidation } from "../middlewares/validations/paramsIdValidation";
+
 const carsRoutes = Router();
 
 const upload = multer(uploadConfig);
@@ -24,6 +28,7 @@ carsRoutes.post(
   "/",
   ensureAuthenticated,
   ensureAdmin,
+  createCarValidation,
   createCarController.handle
 );
 
@@ -31,6 +36,7 @@ carsRoutes.post(
   "/:id/images",
   ensureAuthenticated,
   ensureAdmin,
+  paramsIdValidation,
   upload.array("images"),
   uploadCarImagesController.handle
 );
@@ -39,11 +45,13 @@ carsRoutes.post(
   "/:id/specifications",
   ensureAuthenticated,
   ensureAdmin,
+  paramsIdValidation,
+  createCarSpecificationsValidation,
   createCarSpecificationController.handle
 );
 
-carsRoutes.get("/:id", getCarByIdCarController.handle);
-
 carsRoutes.get("/available", listAvailableCarsController.handle);
+
+carsRoutes.get("/:id", paramsIdValidation, getCarByIdCarController.handle);
 
 export { carsRoutes };

@@ -5,6 +5,8 @@ import { ListSpecificationsController } from "@modules/cars/useCases/listSpecifi
 import { ensureAdmin } from "@shared/infra/http/middlewares/ensureAdmin";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 
+import { createSpecificationValidation } from "../middlewares/validations/createSpecificationValidation";
+
 const specificationsRoutes = Router();
 
 const createSpecificationController = new CreateSpecificationController();
@@ -14,6 +16,7 @@ specificationsRoutes.post(
   "/",
   ensureAuthenticated,
   ensureAdmin,
+  createSpecificationValidation,
   createSpecificationController.handle
 );
 

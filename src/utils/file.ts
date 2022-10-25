@@ -1,10 +1,26 @@
-import fs from "fs";
+import path from "path";
 
-export const deleteFile = async (filename: string): Promise<void> => {
-  try {
-    await fs.promises.stat(filename);
-    await fs.promises.unlink(filename);
-  } catch (err) {
-    console.error(err);
-  }
-};
+export interface IFile {
+  filename: string;
+  originalname: string;
+  mimetype: string;
+  path: string;
+}
+
+export enum FileType {
+  IMAGE = "jpeg|jpg|png|gif",
+  CSV = "csv",
+}
+
+interface IRequest {
+  file: IFile;
+  type: FileType;
+}
+
+export function validate({ file, type }: IRequest): boolean {
+  const regExp = new RegExp(type);
+  return (
+    regExp.test(path.extname(file.originalname).toLocaleLowerCase()) &&
+    regExp.test(file.mimetype)
+  );
+}

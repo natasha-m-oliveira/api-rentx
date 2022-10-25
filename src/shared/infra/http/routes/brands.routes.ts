@@ -5,6 +5,7 @@ import { ListBrandsController } from "@modules/cars/useCases/listBrands/ListBran
 
 import { ensureAdmin } from "../middlewares/ensureAdmin";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
+import { createBrandValidation } from "../middlewares/validations/createBrandValidation";
 
 const brandsRoutes = Router();
 
@@ -15,6 +16,7 @@ brandsRoutes.post(
   "/",
   ensureAuthenticated,
   ensureAdmin,
+  createBrandValidation,
   createBrandController.handle
 );
 

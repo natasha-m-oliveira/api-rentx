@@ -5,12 +5,10 @@ import express from "express";
 import "express-async-errors";
 import swaggerUi from "swagger-ui-express";
 
+import upload from "@config/upload";
 import * as Sentry from "@sentry/node";
 import * as Tracing from "@sentry/tracing";
-
 import "../../container";
-
-import upload from "@config/upload";
 import { errorHandler } from "@shared/infra/http/middlewares/errorHandler";
 import { router } from "@shared/infra/http/routes";
 
